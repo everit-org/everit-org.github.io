@@ -1,0 +1,40 @@
+.everit-header{
+	background-color: rgb(90, 183, 14);
+	background-image: -webkit-linear-gradient(top,#4FA10D 0,rgb(90, 183, 14) 100%);
+	background-image: linear-gradient(to bottom,#4FA10D 0,rgb(90, 183, 14) 100%);
+}
+
+.bs-docs-nav .navbar-brand, .bs-docs-nav .navbar-nav>li>a {
+color: rgb(90, 183, 14);
+font-weight: 500;
+}
+.bs-docs-featurette-title{
+margin-bottom:30px;
+}
+
+.bs-docs-booticon-outline {
+background-color: transparent;
+border: 1px solid #cdbfe3;
+border-radius: 50%;
+}
+
+.btn-outline {
+color: rgb(90, 183, 14);
+background-color: transparent;
+border-color: rgb(90, 183, 14);
+}
+
+.btn-outline:hover, .btn-outline:focus, .btn-outline:active {
+color: #fff;
+background-color: rgb(90, 183, 14);
+border-color: rgb(90, 183, 14);
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+background-color: rgb(90, 183, 14);
+}
+
+a {
+color: rgb(90, 183, 14);
+text-decoration: none;
+}
