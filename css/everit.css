@@ -1,6 +1,11 @@
 img {
     margin-top: -11px;
 }
+.logo {
+    width: 100px;
+    height: 100px;
+    margin-left: -3px;
+}
 .everit-header {
     background-color: rgb(90, 183, 14);
     background-image: -webkit-linear-gradient(top, #4FA10D 0, rgb(90, 183, 14) 100%);
