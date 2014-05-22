@@ -1,3 +1,6 @@
+img {
+    margin-top: -11px;
+}
 .everit-header {
     background-color: rgb(90, 183, 14);
     background-image: -webkit-linear-gradient(top, #4FA10D 0, rgb(90, 183, 14) 100%);
@@ -25,7 +28,7 @@
 }
 .bs-docs-booticon-outline {
     background-color: transparent;
-    border: 1px solid #cdbfe3;
+    border: 1px solid #aad99d;
     border-radius: 50%;
 }
 .btn-outline {
@@ -58,6 +61,7 @@ a:focus {
 .affix-top {
     margin-left: 30px;
     position: static;
+    margin-top: 60px;
 }
 @media (min-width: 979px) {
     .affix-top {
