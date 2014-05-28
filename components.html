@@ -1,170 +1,274 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Everit Opensource Components</title>
+    <link rel="icon" type="image/ico" href="fonts/favicon.ico">
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="jumbotron.css" rel="stylesheet">
     <link href="css/docs.min.css" rel="stylesheet">
     <link href="css/everit.css" rel="stylesheet">
-  </head>
-  <body data-spy="scroll" data-target="#affix-nav">
+</head>
+
+<body data-spy="scroll" data-target="#affix-nav">
     <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
-      <div class="container">
-        <div class="navbar-header">
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          </button>
-          <a href="index.html" class="navbar-brand">Everit</a>
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.html" class="navbar-brand">Everit</a>
+            </div>
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="components.html">Components</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://www.everit.biz/" target="_blank">Enterprise</a>
+                    </li>
+                    <li><a href="http://everitorg.wordpress.com/" target="_blank">Blog</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-          <ul class="nav navbar-nav ">
-            <li>
-              <a href="components.html">Components</a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://twitter.com/EveritOrg">Twitter</a></li>
-            <li><a href="http://everitorg.wordpress.com/">Blog</a></li>
-          </ul>
-        </nav>
-      </div>
     </header>
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="bs-docs-masthead everit-header">
-      <div class="container">
-		<span class="bs-docs-booticon bs-docs-booticon-lg bs-docs-booticon-outline">E</span>
-		<p class="lead">Open source components of Everit Org.</p>
-	  </div>
+        <div class="container">
+            <span class="bs-docs-booticon bs-docs-booticon-lg bs-docs-booticon-outline">
+                <img class="logo" src="fonts/sbz_e.svg">
+            </span>
+            <p class="lead">Open source components of Everit Org</p>
+        </div>
     </div>
-    <div class="container"
-      <!-- Example row of columns -->
-      <div class="col-md-9">
-        <div class="row bs-docs-featurette" id="compgroup1">
-			<h2 class="bs-docs-featurette-title">component group 1 </h2>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="col-md-10 col-sm-12 col-xs-12">
+            <div class="row bs-docs-featurette" id="dev_tools">
+                <h2 class="bs-docs-featurette-title">Development Tools</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>eosgi-maven-plugin</h2>
+                        <p>A Maven plugin that runs Integration Tests in OSGi containers and collects OSGi Bundle dependencies to make them available in any IDE.</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/eosgi-maven-plugin" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>richconsole</h2>
+                        <p>A simple bundle that opens up a rich client application if the OSGi server is started in a graphical environment. This module can be very helpful during development.</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-richconsole" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>testrunner-junit4</h2>
+                        <p>JUnit 4 based test runner engine for the testrunner bundle.</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-testrunner-junit4" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>testrunner</h2>
+                        <p>Runs JUnit test objects that are exposed as OSGi Services</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-testrunner" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>coding-conventions</h2>
+                    <p>Set of configuration files for checkstyle and eclipse to be able to keep the coding conventions</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/coding-conventions" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="featurette-divider">
+            <div class="row bs-docs-featurette" id="persistence">
+                <h2 class="bs-docs-featurette-title">Persistence</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>liquibase-bundle</h2>
+                        <p>Extension to Liquibase to make it possible to use Liquibase in OSGi environment in the way that multiple bundles can contain changeLog snippets and one changeLog can have inclusion to another bundle.</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-liquibase-bundle" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>lqmg</h2>
+                        <p>A generator that supports creating QueryDSL metamodel from Liquibase changelog files via an embedded H2 database from the command line</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-lqmg" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>lqmg-maven-plugin</h2>
+                        <p>A plugin that makes it possible to generate QueryDSL metadata classes from Liquibase changelog files packed in an OSGi bundle.</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/lqmg-maven-plugin" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>osgi-jdbc-dsf</h2>
+                        <p>A simple component that makes it possible to create XADataSource based on configuration</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-jdbc-dsf" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>commons-dbcp</h2>
+                    <p>A configurable DS component that makes it possible to create XA and non-XA pooled datasource instances.</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/commons-dbcp-component" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h2>osgi-hibernate</h2>
+                    <p>OSGi Hibernate bundle, a necessary adapter, a package that collects all the necessary dependencies and a test that shows how we can use it in OSGi environment.</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-hibernate" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="featurette-divider">
+            <div class="row bs-docs-featurette" id="web">
+                <h2 class="bs-docs-featurette-title">Web</h2>
+                <div class="col-md-6">
+                    <h2>webresource</h2>
+                    <p>An extender component to be able to serve static resources (css, javascript, gif, ...) via http</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/webresource" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h2>thymeleaf-mvel2</h2>
+                    <p>Classes that make it possible to use thymeleaf with Mvel2 as an expression evaluator</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/thymeleaf-mvel2" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h2>jersey-extender</h2>
+                    <p>A solution that catches OSGi services that are registered based on the Remote Services chapter of OSGi Enterprise specification and distributes them with Jersey via the http whiteboard pattern.</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-remote-jersey" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="featurette-divider">
+            <div class="row bs-docs-featurette" id="complex_solutions">
+                <h2 class="bs-docs-featurette-title">Complex solutions</h2>
+                <div class="col-md-6">
+                    <h2>Resource</h2>
+                    <p>Resource table in the datamodel</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/resource" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Authentication</h2>
+                    <p>Principal and credential based authentication.</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/authentication-simple" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Localization</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/localization" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="featurette-divider">
+            <div class="row bs-docs-featurette" id="utilities">
+                <h2 class="bs-docs-featurette-title">Utilities</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>transaction-helper</h2>
+                        <p>Transaciton Helper is a OSGi-DS component that makes it simple to use transaction propagation in the code. The component registers the TransactionHelper OSGi service that has the well known propagation functions (requires, requiresNew, never, ...).</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/transaction-helper" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>eventdispatcher</h2>
+                        <p>Utility classes to be able to write an event dispatcher that sends historical "replay" event data to newly registered listeners as well</p>
+                        <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/eventdispatcher" role="button" target="_blank">View details &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>osgi-servicereference</h2>
+                    <p>Helper classes to be able to reference an OSGi service with a proxy object and hold method calls until a timeout if no service is available behind a proxy.</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-servicereference" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+            </div>
+            <hr class="featurette-divider">
+            <div class="row bs-docs-featurette" id="jira">
+                <h2 class="bs-docs-featurette-title">Jira</h2>
+                <div class="col-md-6">
+                    <h2>jira-timetracker-plugin</h2>
+                    <p>A plugin that makes it easier to fill the timelogs in Jira</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/jira-timetracker-plugin" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h2>jira-worklog-query-plugin</h2>
+                    <p>A JIRA plugin to query worklogs in JSON format via an authenticted RESTful service.</p>
+                    <p><a class="btn btn-outline btn-default" href="https://github.com/everit-org/jira-worklog-query-plugin" role="button" target="_blank">View details &raquo;</a>
+                    </p>
+                </div>
+            </div>
         </div>
-		
-		<div class="row bs-docs-featurette" id="compgroup2">
-		<h2 class="bs-docs-featurette-title">component group 2</h2>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-        </div><div class="row bs-docs-featurette" id="compgroup3">
-		<h2 class="bs-docs-featurette-title">component group 3</h2>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-		  <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
+        <div class="col-md-2 col-sm-0 col-xs-0">
+            <nav id="affix-nav">
+                <ul class=" nav nav-pills nav-stacked everit-affix" data-spy="affix" data-offset-top="350" data-offset-bottom="140">
+                    <li class="active">
+                        <a href="#dev_tools">Development Tools</a>
+                    </li>
+                    <li>
+                        <a href="#persistence">Persistence</a>
+                    </li>
+                    <li>
+                        <a href="#web ">Web</a>
+                    </li>
+                    <li>
+                        <a href="#complex_solutions">Complex solutions</a>
+                    </li>
+                    <li>
+                        <a href="#utilities">Utilities</a>
+                    </li>
+                    <li>
+                        <a href="#jira">Jira</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-		<div class="row bs-docs-featurette" id="compgroup4">
-				<h2 class="bs-docs-featurette-title">component group 4</h2>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-		  		  <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-6">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-        </div>
-      </div>
-        <nav id="affix-nav" class="col-md-3 " style="margin-top:70px">
-          <ul class="nav nav-pills nav-stacked" data-spy="affix" style="max-width:200px;">
-            <li class="active">
-              <a href="#compgroup1">Group 1</a>
-            </li>
-            <li>
-              <a href="#compgroup2">Group 2</a>
-            </li>
-			<li>
-              <a href="#compgroup3">Group 3</a>
-			</li>
-			<li>
-              <a href="#compgroup4">Group 4</a>
-            </li>
-          </ul>
-        </nav>
     </div>
-	    <!-- Footer
+    <!-- Footer
 ================================================== -->
-<footer class="bs-docs-footer" role="contentinfo">
-  <div class="container">
-    <div class="bs-docs-social">
-  <ul class="bs-docs-social-buttons">
-	<li class="follow-btn">
-      	<iframe allowtransparency="true" frameborder="0" scrolling="no"
-				src="http://platform.twitter.com/widgets/follow_button.html?screen_name=EveritOrg"
-				class="twitter-follow-button twitter-follow-button" title="Twitter Follow Button" data-twttr-rendered="true" style="width:300px; height:20px;">
-		</iframe>
-    </li>
-	<li class="tweet-btn">
-		<iframe allowtransparency="true" frameborder="0" scrolling="no"
-				src="https://platform.twitter.com/widgets/tweet_button.html?url=http://www.everit.biz/&text=EveritOrg"
-				style="width:130px; height:20px;"></iframe>    </li>
-  </ul>
-</div>
+    <footer class="bs-docs-footer" role="contentinfo">
+        <div class="container">
+            <div class="bs-docs-social">
+                <ul class="bs-docs-social-buttons">
+                    <li class="follow-btn">
+                        <a href="https://twitter.com/EveritOrg" class="twitter-follow-button" data-show-count="true">Follow @EveritOrg</a>
+                    </li>
+                    <li class="tweet-btn">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.everit.biz/">Tweet</a>
+                    </li>
+                </ul>
+            </div>
 
-  </div>
-</footer>
+        </div>
+    </footer>
     <!-- /container -->
     <!-- Bootstrap core JavaScript
       ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-  </body>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js "></script>
+    <script src="js/everit.js "></script>
+</body>
+
 </html>

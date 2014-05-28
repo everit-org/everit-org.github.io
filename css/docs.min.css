@@ -35,7 +35,7 @@ body {position: relative}
  
 .bs-docs-booticon {
 	display: block;
-	font-weight: 500;
+	font-weight: 00;
 	color: #fff;
 	background-color: #563d7c;
 	border-radius: 15%;
@@ -266,7 +266,7 @@ body {position: relative}
 		font-size: 30px;
 		font-weight: 400;
 		color: #333;
-		margin-bottom: 5px
+		margin-bottom: 5px;
 	 }
  
 	.half-rule {width: 100px;margin:40px auto}
