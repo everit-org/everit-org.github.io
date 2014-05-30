@@ -12,6 +12,7 @@ html {
     background-color: rgb(90, 183, 14);
     background-image: -webkit-linear-gradient(top, #4FA10D 0, rgb(90, 183, 14) 100%);
     background-image: linear-gradient(to bottom, #4FA10D 0, rgb(90, 183, 14) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#4FA10D', endColorstr='#5AB70E', GradientType=0);
 }
 .bs-docs-nav .navbar-brand,
 .bs-docs-nav .navbar-nav>li>a {
