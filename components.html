@@ -87,7 +87,7 @@
         <div class="row">
           <div class="col-md-6">
             <h2>testrunner</h2>
-            <p>Runs JUnit test objects that are exposed as OSGi Services</p>
+            <p>Runs unit test objects that are exposed as OSGi Services</p>
             <p>
               <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-testrunner" role="button"
                 target="_blank">View details &raquo;</a>
@@ -108,6 +108,40 @@
           <p>
             <a class="btn btn-outline btn-default" href="https://github.com/everit-org/coding-conventions" role="button"
               target="_blank">View details &raquo;</a>
+          </p>
+        </div>
+      </div>
+      <hr class="featurette-divider">
+      <div class="row bs-docs-featurette" id="utilities">
+        <h2 class="bs-docs-featurette-title">Utilities</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>transaction-helper</h2>
+            <p>Transaciton Helper is a OSGi-DS component that makes it simple to use transaction propagation in the
+              code. The component registers the TransactionHelper OSGi service that has the well known propagation
+              functions (requires, requiresNew, never, ...).</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/transaction-helper"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h2>eventdispatcher</h2>
+            <p>Utility classes to be able to write an event dispatcher that sends historical "replay" event data to
+              newly registered listeners as well</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/eventdispatcher" role="button"
+                target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h2>osgi-servicereference</h2>
+          <p>Helper classes to be able to reference an OSGi service with a proxy object and hold method calls until
+            a timeout if no service is available behind a proxy.</p>
+          <p>
+            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-servicereference"
+              role="button" target="_blank">View details &raquo;</a>
           </p>
         </div>
       </div>
@@ -172,6 +206,86 @@
         </div>
       </div>
       <hr class="featurette-divider">
+      <div class="row bs-docs-featurette" id="complex_solutions">
+        <h2 class="bs-docs-featurette-title">Complex solutions</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Resource</h2>
+            <p>Modules that connects everything in a relational database.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="resource.html" role="button">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h2>Cache</h2>
+            <p>Caching solution in OSGi environment.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="cache.html" role="button">View details &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Properties</h2>
+            <p>A persistent key-value storage with cache support. The data is stored in relational database.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/property-manager-ri"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h2>Localization</h2>
+            <p>Localization contains OSGi modules that help using persistent localized data. To do that, it stores
+              the key-value pairs in databse tables.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/localization-ri" role="button"
+                target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Encryption</h2>
+            <p>Solutions for encrypting in OSGi.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="encryption.html" role="button">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h2>Authentication</h2>
+            <p>Implementations of different authentication mechanisms: Form-based authentication, Http Basic
+              Authentication, CAS, etc.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="authentication.html" role="button">View details &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Authorization</h2>
+            <p>Authorize users (resources) to do any action on target resources.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/authorization-ri" role="button"
+                target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h2>Balance</h2>
+            <p>Simple account and transfer management module.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/balance-ri" role="button"
+                target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Audit</h2>
+            <p>Coming soon...</p>
+          </div>
+        </div>
+      </div>
+      <hr class="featurette-divider">
       <div class="row bs-docs-featurette" id="web">
         <h2 class="bs-docs-featurette-title">Web</h2>
         <div class="col-md-6">
@@ -201,70 +315,6 @@
         </div>
       </div>
       <hr class="featurette-divider">
-      <div class="row bs-docs-featurette" id="complex_solutions">
-        <h2 class="bs-docs-featurette-title">Complex solutions</h2>
-        <div class="col-md-6">
-          <h2>Resource</h2>
-          <p>Resource table in the datamodel</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/resource" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-        <div class="col-md-6">
-          <h2>Authentication</h2>
-          <p>Principal and credential based authentication.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/authentication-simple"
-              role="button" target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-        <div class="col-md-6">
-          <h2>Localization</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-            euismod. Donec sed odio dui.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/localization" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-      </div>
-      <hr class="featurette-divider">
-      <div class="row bs-docs-featurette" id="utilities">
-        <h2 class="bs-docs-featurette-title">Utilities</h2>
-        <div class="row">
-          <div class="col-md-6">
-            <h2>transaction-helper</h2>
-            <p>Transaciton Helper is a OSGi-DS component that makes it simple to use transaction propagation in the
-              code. The component registers the TransactionHelper OSGi service that has the well known propagation
-              functions (requires, requiresNew, never, ...).</p>
-            <p>
-              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/transaction-helper"
-                role="button" target="_blank">View details &raquo;</a>
-            </p>
-          </div>
-          <div class="col-md-6">
-            <h2>eventdispatcher</h2>
-            <p>Utility classes to be able to write an event dispatcher that sends historical "replay" event data to
-              newly registered listeners as well</p>
-            <p>
-              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/eventdispatcher" role="button"
-                target="_blank">View details &raquo;</a>
-            </p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <h2>osgi-servicereference</h2>
-          <p>Helper classes to be able to reference an OSGi service with a proxy object and hold method calls until
-            a timeout if no service is available behind a proxy.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-servicereference"
-              role="button" target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-      </div>
-      <hr class="featurette-divider">
       <div class="row bs-docs-featurette" id="jira">
         <h2 class="bs-docs-featurette-title">Jira</h2>
         <div class="col-md-6">
@@ -284,40 +334,17 @@
           </p>
         </div>
       </div>
-      <hr class="featurette-divider">
-      <div class="row bs-docs-featurette" id="cache">
-        <h2 class="bs-docs-featurette-title">Cache</h2>
-        <div class="col-md-6">
-          <h2>cache-api</h2>
-          <p>Cache instances can be used inside an OSGi environment with this API. The implementations should
-            provide at least two components. One for CacheFactory and one for CacheConfiguration.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/cache-api" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-        <div class="col-md-6">
-          <h2>cache-infinispan</h2>
-          <p>An Infinispan based component which implements the org.everit.osgi.cache.api so it can configure and
-            return a ready to use cache instance.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/cache-infinispan" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-      </div>
     </div>
     <div class="col-md-2 col-sm-0 col-xs-0">
       <nav id="affix-nav">
         <ul class=" nav nav-pills nav-stacked everit-affix" data-spy="affix" data-offset-top="350"
           data-offset-bottom="140">
           <li class="active"><a href="#dev_tools">Development Tools</a></li>
-          <li><a href="#persistence">Persistence</a></li>
-          <li><a href="#web ">Web</a></li>
-          <li><a href="#complex_solutions">Complex solutions</a></li>
           <li><a href="#utilities">Utilities</a></li>
+          <li><a href="#persistence">Persistence</a></li>
+          <li><a href="#complex_solutions">Complex solutions</a></li>
+          <li><a href="#web ">Web</a></li>
           <li><a href="#jira">Jira</a></li>
-          <li><a href="#cache">Cache</a></li>
         </ul>
       </nav>
     </div>
