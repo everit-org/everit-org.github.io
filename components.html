@@ -103,13 +103,15 @@
             </p>
           </div>
         </div>
-        <div class="col-md-6">
-          <h2>coding-conventions</h2>
-          <p>Set of configuration files for checkstyle and eclipse to be able to keep the coding conventions</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/coding-conventions" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>coding-conventions</h2>
+            <p>Set of configuration files for checkstyle and eclipse to be able to keep the coding conventions</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/coding-conventions"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
         </div>
       </div>
       <hr class="featurette-divider">
@@ -173,6 +175,26 @@
             </p>
           </div>
           <div class="col-md-6">
+            <h2>osgi-liquibase-datasource</h2>
+            <p>A component that is responsible to re-register a DataSource service when it is sure that the database
+              schema is up-to-date.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-liquibase-datasource"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>osgi-liquibase-component</h2>
+            <p>With the help of the component it is possible to update database schema easily from the different
+              bundles.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-liquibase-component"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
             <h2>lqmg</h2>
             <p>A generator that supports creating QueryDSL metamodel from Liquibase changelog files via an embedded
               H2 database from the command line</p>
@@ -193,6 +215,34 @@
             </p>
           </div>
           <div class="col-md-6">
+            <h2>osgi-querydsl-templates</h2>
+            <p>OSGi Components that makes it possible to create SQLTemplates instances via configuration.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-querydsl-templates"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>osgi-querydsl-support</h2>
+            <p>Component that make it possible to access the database by implementing functional interfaces.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-querydsl-support"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h2>osgi-querydsl-configuration</h2>
+            <p>Component that help registering Querydsl Configuration as OSGi service.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-querydsl-configuration"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
             <h2>osgi-jdbc-dsf</h2>
             <p>A simple component that makes it possible to create XADataSource based on configuration</p>
             <p>
@@ -200,23 +250,26 @@
                 target="_blank">View details &raquo;</a>
             </p>
           </div>
+          <div class="col-md-6">
+            <h2>commons-dbcp</h2>
+            <p>A configurable DS component that makes it possible to create XA and non-XA pooled datasource
+              instances.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/commons-dbcp-component"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
         </div>
-        <div class="col-md-6">
-          <h2>commons-dbcp</h2>
-          <p>A configurable DS component that makes it possible to create XA and non-XA pooled datasource instances.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/commons-dbcp-component"
-              role="button" target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-        <div class="col-md-6">
-          <h2>osgi-hibernate</h2>
-          <p>OSGi Hibernate bundle, a necessary adapter, a package that collects all the necessary dependencies and
-            a test that shows how we can use it in OSGi environment.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-hibernate" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>osgi-hibernate</h2>
+            <p>OSGi Hibernate bundle, a necessary adapter, a package that collects all the necessary dependencies
+              and a test that shows how we can use it in OSGi environment.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-hibernate" role="button"
+                target="_blank">View details &raquo;</a>
+            </p>
+          </div>
         </div>
       </div>
       <hr class="featurette-divider">
@@ -304,51 +357,57 @@
 
       <div class="row bs-docs-featurette" id="web">
         <h2 class="bs-docs-featurette-title">Web</h2>
-        <div class="col-md-6">
-          <h2>webresource</h2>
-          <p>An extender component to be able to serve static resources (css, javascript, gif, ...) via http</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/webresource" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>webresource</h2>
+            <p>An extender component to be able to serve static resources (css, javascript, gif, ...) via http</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/webresource" role="button"
+                target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h2>thymeleaf-mvel2</h2>
+            <p>Classes that make it possible to use thymeleaf with Mvel2 as an expression evaluator</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/thymeleaf-mvel2" role="button"
+                target="_blank">View details &raquo;</a>
+            </p>
+          </div>
         </div>
-        <div class="col-md-6">
-          <h2>thymeleaf-mvel2</h2>
-          <p>Classes that make it possible to use thymeleaf with Mvel2 as an expression evaluator</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/thymeleaf-mvel2" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-        <div class="col-md-6">
-          <h2>jersey-extender</h2>
-          <p>A solution that catches OSGi services that are registered based on the Remote Services chapter of OSGi
-            Enterprise specification and distributes them with Jersey via the http whiteboard pattern.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-remote-jersey" role="button"
-              target="_blank">View details &raquo;</a>
-          </p>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>jersey-extender</h2>
+            <p>A solution that catches OSGi services that are registered based on the Remote Services chapter of
+              OSGi Enterprise specification and distributes them with Jersey via the http whiteboard pattern.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/osgi-remote-jersey"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
         </div>
       </div>
       <hr class="featurette-divider">
 
       <div class="row bs-docs-featurette" id="jira">
         <h2 class="bs-docs-featurette-title">Jira</h2>
-        <div class="col-md-6">
-          <h2>jira-timetracker-plugin</h2>
-          <p>A plugin that makes it easier to fill the timelogs in Jira</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/jira-timetracker-plugin"
-              role="button" target="_blank">View details &raquo;</a>
-          </p>
-        </div>
-        <div class="col-md-6">
-          <h2>jira-worklog-query-plugin</h2>
-          <p>A JIRA plugin to query worklogs in JSON format via an authenticted RESTful service.</p>
-          <p>
-            <a class="btn btn-outline btn-default" href="https://github.com/everit-org/jira-worklog-query-plugin"
-              role="button" target="_blank">View details &raquo;</a>
-          </p>
+        <div class="row">
+          <div class="col-md-6">
+            <h2>jira-timetracker-plugin</h2>
+            <p>A plugin that makes it easier to fill the timelogs in Jira</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/jira-timetracker-plugin"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h2>jira-worklog-query-plugin</h2>
+            <p>A JIRA plugin to query worklogs in JSON format via an authenticted RESTful service.</p>
+            <p>
+              <a class="btn btn-outline btn-default" href="https://github.com/everit-org/jira-worklog-query-plugin"
+                role="button" target="_blank">View details &raquo;</a>
+            </p>
+          </div>
         </div>
       </div>
       <hr class="featurette-divider">
@@ -383,8 +442,8 @@
           </ul>
         </div>
       </div>
-
     </div>
+
     <div class="col-md-2 col-sm-0 col-xs-0">
       <nav id="affix-nav">
         <ul class=" nav nav-pills nav-stacked everit-affix" data-spy="affix" data-offset-top="350"
