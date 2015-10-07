@@ -119,8 +119,7 @@
             </p></li>
         </ul>
         <p>Add the following header to any of your class:</p>
-        <pre class="prettyprint lang-java">
-import org.everit.osgi.ecm.annotation.Component;
+        <pre class="prettyprint lang-java">import org.everit.osgi.ecm.annotation.Component;
 import aQute.bnd.annotation.headers.ProvideCapability;
 
 @Component
@@ -128,6 +127,16 @@ import aQute.bnd.annotation.headers.ProvideCapability;
     value = ECMExtenderConstants.CAPABILITY_ATTR_CLASS + "" + "=${@class}")
 public class MyComponent {
 }</pre>
+        <p>
+          With a build tool that uses <i>bndlib</i> inside, the necessary MANIFEST header will be
+          automatically generated. Such tools are bndtools and maven-bundle-plugin. If this
+          automation is not available, the <i>Provide-Capability</i> header must be manually
+          defined:
+        </p>
+        <pre class="prettyprint">Provide-Capability: org.everit.osgi.ecm.component;class="mypackage.MyComponent"</pre>
+        <p>By having the necessary MANIFEST header, the ECM Extender will automatically pick up
+          the specified class and look for annotations in it.</p>
+          <p>The <a href="#ecm-extender-ri">ecm-extender-ri</a> bundle with its dependencies must be installed in the running environment.</p>
         <h3 id="usage-programmatic">Programmatic usage</h3>
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="modules">
