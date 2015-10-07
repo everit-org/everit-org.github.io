@@ -56,6 +56,12 @@ html {
 .nav-pills>li.active>a:focus {
     background-color: rgb(90, 183, 14);
 }
+.nav-pills>li.active>ul>li.active>a,
+.nav-pills>li.active>ul>li.active>a:hover,
+.nav-pills>li.active>ul>li.active>a:focus
+    {
+    background-color: rgb(120, 213, 44);
+}
 a {
     color: rgb(90, 183, 14);
     text-decoration: none;
@@ -102,4 +108,30 @@ a:focus {
     border-top: 1px solid #e5e5e5;
     margin: 0;
     padding: 0;
+}
+#affix-nav .nav .nav {
+    display: none;
+}
+
+#affix-nav .nav>.active>.nav {
+    display: block;
+    margin-left: 10px;
+}
+#affix-nav>.nav>li>a {
+    padding: 8px 13px;
+}
+
+#affix-nav>.nav>li>ul>li>a {
+    padding: 8px 13px;
+}
+
+pre {
+    word-wrap: normal !important;
+}
+pre.prettyprint {
+    padding: 1em !important;
+}
+
+a.coming-soon {
+    opacity: 0.5;
 }

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Everit Documentation</title>
+<link rel="icon" type="image/ico" href="../fonts/favicon.ico">
+<!-- Bootstrap core CSS -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Documentation extras -->
+<link href="../css/docs.min.css" rel="stylesheet">
+<link href="../css/everit.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+    <script src="../js/html5shiv.min.js"></script>
+    <script src="../js/respond.min.js"></script>
+    <script src="../js/respond.matchmedia.addListener.min.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push([ '_setAccount', 'UA-15041869-4' ]);
+  _gaq.push([ '_setDomainName', 'everit.org' ]);
+  _gaq.push([ '_trackPageview' ]);
+</script>
+<style type="text/css">
+.ecm-chapter {
+    text-align: justify;
+}
+</style>
+</head>
+
+<body class="bs-docs-home" data-spy="scroll" data-target="#affix-nav">
+  <a class="sr-only" href="#content">Skip to main content</a>
+
+  <!-- Docs master nav -->
+  <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse"
+          data-target=".bs-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+            class="icon-bar"></span> <span class="icon-bar"></span>
+        </button>
+        <a href="index.html" class="navbar-brand ">Everit</a>
+      </div>
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav ">
+          <li><a href="components.html ">Components</a></li>
+          <li><a href="documentation.html">Documentation</a></li>
+          <li><a href="oldsite.html ">Old site</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right ">
+          <li><a href="http://www.everit.biz " target="_blank">Enterprise</a></li>
+          <li><a href="http://everitorg.wordpress.com/ " target="_blank">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="bs-docs-masthead everit-header" id="content" role="main">
+    <div class="container ">
+      <span class="bs-docs-booticon bs-docs-booticon-lg bs-docs-booticon-outline "> <img
+        class="logo " src="../fonts/sbz_e.svg" alt="E">
+      </span>
+      <p class="lead ">Everit Component Model</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="col-md-10">
+      <div class="bs-docs-featurette ecm-chapter" id="introduction">
+        <h2 class="bs-docs-featurette-title ">Introduction</h2>
+        <p>
+          ECM is a <a href="http://wiki.osgi.org/wiki/Component_Models_Overview">component model</a>
+          designed to work well in large OSGi based applications. Developers who have used <a
+            href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a> before
+          will find the concept of ECM familiar.
+        </p>
+        <p>
+          While modularization gives <a href="http://www.osgi.org/Technology/WhyOSGi">lots of
+            benefits</a> to a project, developers often feel that the application skeleton is similar to
+          a house of cards. If any of the component has an issue, part of the system collapses, and
+          it is nearly impossible to find the origin of the problem. One of the goals of Everit
+          Component Model is to help developers finding the cause of issues in OSGi.
+        </p>
+        <p>
+          Instead of <a href="http://wiki.osgi.org/wiki/Whiteboard_Pattern">whiteboard pattern</a>,
+          ECM supports the top-down configuration approach. While developers can wire components
+          together with whiteboard pattern rapidly, they lose the ability of systematic issue
+          detection. E.g.: When part of an application is not started, and no exception is thrown,
+          it is hard to find the missing piece. Searching the issue is even harder when one has to
+          fix an issue in an application that was written by other.
+        </p>
+        <p>With top-down configuration design, developers can start searching the problem from
+          the top of the application skeleton and by walking down on the unsatisfied component
+          graph, they can find the original cause of the issue rapidly. With ECM, designing OSGi
+          based applications becomes easier and more fun.</p>
+      </div>
+      <div class="bs-docs-featurette ecm-chapter" id="usage">
+        <h2 class="bs-docs-featurette-title ">Usage</h2>
+        <p>There are several ways to use the Everit Component Model. The easiest way is using
+          OSGi extender pattern, while components can be created and started programmatically, too.</p>
+        <h3 id="usage-extender">Using the Extender</h3>
+        <p>During development time, add the following dependencies (with their dependencies
+          transitively):</p>
+        <ul>
+          <li><p>
+              <a href="#ecm-annotation">ecm-annotation</a>
+            </p></li>
+          <li><p>
+              <a href="#ecm-extender-api">ecm-extender-api</a>
+            </p></li>
+          <li><p>
+              <a href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22biz.aQute.bndlib%22">bndlib</a>
+              with <i>provided</i> scope as it is only necessary for annotation processing
+            </p></li>
+        </ul>
+        <p>Add the following header to any of your class:</p>
+        <pre class="prettyprint lang-java">
+import org.everit.osgi.ecm.annotation.Component;
+import aQute.bnd.annotation.headers.ProvideCapability;
+
+@Component
+@ProvideCapability(ns = ECMExtenderConstants.CAPABILITY_NS_COMPONENT,
+    value = ECMExtenderConstants.CAPABILITY_ATTR_CLASS + "" + "=${@class}")
+public class MyComponent {
+}</pre>
+        <h3 id="usage-programmatic">Programmatic usage</h3>
+      </div>
+      <div class="bs-docs-featurette ecm-chapter" id="modules">
+        <h2 class="bs-docs-featurette-title ">OSGi Bundles</h2>
+        <p>
+          ECM is built up from several bundles. Each bundle has its own purpose. The separation is
+          necessary to keep the technology stable and to be able to fix bugs in short development
+          iterations. All bundles are available on <a
+            href="http://search.maven.org/#search%7Cga%7C1%7Corg.everit.osgi.ecm">maven-central</a>.
+        </p>
+        <p class="text-center">
+          <img src="ecm-dependency-graph.svg" style="max-width: 100%;" />
+        </p>
+        <h3 id="ecm-extender-api">ECM Extender API</h3>
+        <p>Hello extender api</p>
+      </div>
+      <div class="bs-docs-featurette ecm-chapter" id="webconsole-plugin">
+        <h2 class="bs-docs-featurette-title ">Webconsole plugin</h2>
+
+      </div>
+    </div>
+    <div class="col-md-2">
+      <nav id="affix-nav">
+        <ul class="nav nav-pills nav-stacked everit-affix affix-top" data-spy="affix"
+          data-offset-top="350" data-offset-bottom="140">
+          <li class=""><a href="#introduction">Introduction</a></li>
+          <li class=""><a href="#usage">Usage</a>
+            <ul class="nav nav-pills nav-stacked">
+              <li class=""><a href="#usage-extender">Installing Java on Linux</a></li>
+              <li class=""><a href="#usage-programmatic">Installing Java on Windows</a></li>
+            </ul></li>
+          <li class=""><a href="#osgi-bundles">OSGi Bundles</a>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+
+  <!-- Footer
+================================================== -->
+  <div></div>
+  <footer class="bs-docs-footer" role="contentinfo">
+    <div class="container">
+      <div class="bs-docs-social">
+        <ul class="bs-docs-social-buttons">
+          <li class="follow-btn"><a href="https://twitter.com/EveritOrg"
+            class="twitter-follow-button" data-show-count="true">Follow @EveritOrg</a></li>
+          <li class="tweet-btn"><a href="https://twitter.com/share"
+            class="twitter-share-button" data-url="http://www.everit.org/">Tweet</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript
+================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/everit.js"></script>
+  <script type="text/javascript">
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+            : 'http://www')
+            + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <script src="../js/prettify/run_prettify.js"></script>
+
+</body>
+
+</html>
