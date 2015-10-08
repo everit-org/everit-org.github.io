@@ -118,7 +118,9 @@
               with <i>provided</i> scope as it is only necessary for annotation processing
             </p></li>
         </ul>
-        <p>Add the following header to any of your class:</p>
+
+        <p>In order to be picked up by the extender, the component class must be annotated in
+          the following way:</p>
         <pre class="prettyprint lang-java">import org.everit.osgi.ecm.annotation.Component;
 import aQute.bnd.annotation.headers.ProvideCapability;
 
@@ -128,6 +130,10 @@ import aQute.bnd.annotation.headers.ProvideCapability;
 public class MyComponent {
 }</pre>
         <p>
+          The documentation of <a href="#ecm-annotation">ecm-annotation</a> OSGi bundle contains the
+          full list of annotations that can be used during the creation of a component class.
+        </p>
+        <p>
           With a build tool that uses <i>bndlib</i> inside, the necessary MANIFEST header will be
           automatically generated. Such tools are bndtools and maven-bundle-plugin. If this
           automation is not available, the <i>Provide-Capability</i> header must be manually
@@ -136,13 +142,126 @@ public class MyComponent {
         <pre class="prettyprint">Provide-Capability: org.everit.osgi.ecm.component;class="mypackage.MyComponent"</pre>
         <p>By having the necessary MANIFEST header, the ECM Extender will automatically pick up
           the specified class and look for annotations in it.</p>
-          <p>The <a href="#ecm-extender-ri">ecm-extender-ri</a> bundle with its dependencies must be installed in the running environment.</p>
-        <h3 id="usage-programmatic">Programmatic usage</h3>
+        <p>In the runtime environment, the following OSGi bundle should be installed with its
+          dependencies:</p>
+        <ul>
+          <li><p>
+              <a href="#ecm-extender-ri">extender-ri</a>
+            </p></li>
+        </ul>
+        <h3 id="usage-programmatic">Programmatic way</h3>
+        <p>Everit Component Model is designed in the way that Components can be created
+          programmatically, too. During the development and also on the running OSGi container, the
+          following OSGi bundle with its dependencies should be used:</p>
+        <ul>
+          <li><p>
+              <a href="#ecm-component-ri">ecm-component-ri</a>
+            </p></li>
+        </ul>
+        <p>
+          In the following example, a very simple <a href="ecm-component-container">ECM
+            Component Container</a> is created and started within a Bundle-Activator:
+        </p>
+        <pre class="prettyprint lang-java">
+import org.everit.osgi.ecm.component.ri.ComponentContainerFactory;
+import org.everit.osgi.ecm.component.ri.ComponentContainerInstance;
+import org.everit.osgi.ecm.metadata.ComponentMetadata;
+import org.everit.osgi.ecm.metadata.ComponentMetadata.ComponentMetadataBuilder;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+
+public class MyActivator {
+
+  private ComponentContainerInstance&lt;MyComponent&gt; myComponentContainer
+
+  @Override
+  public void start(final BundleContext context) {
+    ComponentMetadataBuilder builder = new ComponentMetadataBuilder();
+    ComponentMetadata metadata = builder.withType(MyComponent.class).build();
+
+    ComponentContainerFactory factory = new ComponentContainerFactory(context);
+
+    this.myComponentContainer = factory.createComponentContainer(metadata);
+    this.myComponentContainer.open();
+  }
+
+  @Override
+  public void stop(final BundleContext context) {
+    this.myComponentContainer.close();
+  }
+}</pre>
+        <p>
+          For more information, how to build <i>ComponentMetadata</i> programmatically, see the
+          documentation of <a href="#ecm-metadata">ecm-metadata</a> OSGi bundle!
+        </p>
+      </div>
+      <div class="bs-docs-featurette ecm-chapter" id="architecture">
+        <h2 class="bs-docs-featurette-title ">Architecture</h2>
+        <h3 id="component-container">Component Container</h3>
+        <p>
+          A <i>Component Container</i> handles the instantiation of Components based on the <i>metadata</i>
+          of the Component and the available configuration. A <i>Component Container</i> has an <i>opened</i>
+          and a <i>closed</i> state. When the <i>Component Container</i> is opened, an OSGi service
+          is registered with the following interfaces:
+        </p>
+        <ul>
+          <li><p>
+              <strong>org.everit.osgi.ecm.component.resource.ComponentContainer</strong> can be used
+              to retrieve all information about the state of the container instance. Programmers can
+              list the instantiated components, get the <i>metadata</i> that belongs to the
+              component, etc.
+            </p></li>
+          <li><p>
+              <strong><a
+                href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedService.html">org.osgi.service.cm.ManagedService</a></strong>
+              if the <a href="#TBD">configuration policy</a> of the container is either <i>OPTIONAL</i>
+              or <i>REQUIRED</i>.
+            </p></li>
+          <li><p>
+              <strong><a
+                href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedServiceFactory.html">org.osgi.service.cm.ManagedServiceFactory</a></strong>
+              if the <a href="#TBD">configuration policy</a> of the container is <i>REQUIRED</i>.
+            </p></li>
+          <li><p>
+              <strong><a
+                href="https://osgi.org/javadoc/r4v42/org/osgi/service/metatype/MetaTypeProvider.html">org.osgi.service.metatype.MetaTypeProvider</a></strong>
+              if the <i>metatype</i> data belongs to the container.
+            </p></li>
+        </ul>
+        <p>
+          ECM relies on the Configuration Admin chapter of OSGi Compendium specification. If any
+          configuration is necessary, the ComponentContainer OSGi service is registered with <i>ManagedService</i>
+          or <i>ManagedServiceFactory</i> interface. Configuration Admin notifies the Component
+          Container by calling the OSGi service if a new configuration is available, a configuration
+          was modified or a configuration was deleted. The behavior of the Component Container
+          depends on the configuration policy:
+        </p>
+        <ul>
+          <li><p>
+              <strong>IGNORE</strong>: Neither ManagedService nor ManagedServieFactory interface is
+              used when the ComponentContainer OSGi service is registered. The container
+              instantiates and activates the component as soon as the container is opened and all
+              references of the component are satisfied.
+            </p></li>
+          <li><p>
+              <strong>OPTIONAL</strong>: One component will be instantiated as soon as the container
+              is started. In case there is a configuration for the component, the component will be
+              upgraded. <strong><span class="text-danger">Although this is the
+                  default policy for components, we do not recommend using it. It makes the
+                  component uncertain.</span></strong>
+            </p></li>
+          <li><p>
+              <strong>REQUIRED</strong>: The component will be instantiated only if </strong>
+            </p></li>
+          <li><p></p></li>
+        </ul>
+
+        <h3 id="component-lifecycle">Component Lifecycle</h3>
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="modules">
         <h2 class="bs-docs-featurette-title ">OSGi Bundles</h2>
         <p>
-          ECM is built up from several bundles. Each bundle has its own purpose. The separation is
+          ECM is built up from several bundles. Each bundle has its purpose. The separation is
           necessary to keep the technology stable and to be able to fix bugs in short development
           iterations. All bundles are available on <a
             href="http://search.maven.org/#search%7Cga%7C1%7Corg.everit.osgi.ecm">maven-central</a>.
@@ -165,8 +284,8 @@ public class MyComponent {
           <li class=""><a href="#introduction">Introduction</a></li>
           <li class=""><a href="#usage">Usage</a>
             <ul class="nav nav-pills nav-stacked">
-              <li class=""><a href="#usage-extender">Installing Java on Linux</a></li>
-              <li class=""><a href="#usage-programmatic">Installing Java on Windows</a></li>
+              <li class=""><a href="#usage-extender">Using the extender</a></li>
+              <li class=""><a href="#usage-programmatic">Programmatic way</a></li>
             </ul></li>
           <li class=""><a href="#osgi-bundles">OSGi Bundles</a>
         </ul>
