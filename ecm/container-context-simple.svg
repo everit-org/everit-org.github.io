@@ -1,0 +1,16 @@
+<svg width="383" height="285" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_1" height="285" width="383" y="0" x="0" stroke="#000000" fill="#00ff00"/>
+  <text xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" id="svg_2" y="32" x="187" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">Component Container</text>
+  <g id="svg_8">
+   <rect id="svg_3" height="98.999998" width="160" y="115" x="115" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="#00ffff"/>
+   <text xml:space="preserve" text-anchor="middle" font-family="serif" font-size="14" id="svg_4" y="132" x="178" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">Component Context</text>
+   <ellipse ry="32.5" rx="61.000001" id="svg_5" cy="171.5" cx="195.000001" stroke-linecap="null" stroke-linejoin="null" stroke="#000000" fill="#ffd4aa"/>
+   <text xml:space="preserve" text-anchor="middle" font-family="serif" font-size="14" id="svg_7" y="176" x="194" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">Component Instance</text>
+  </g>
+  <line id="svg_15" y2="565" x2="-7" y1="564" x1="-5" stroke-linecap="null" stroke-linejoin="null" stroke-width="3" stroke="#000000" fill="none"/>
+  <text xml:space="preserve" text-anchor="middle" font-family="serif" font-size="24" id="svg_48" y="73.5" x="190" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" stroke="#000000" fill="#000000">(IGNORE, OPTIONAL, REQUIRED)</text>
+ </g>
+</svg>

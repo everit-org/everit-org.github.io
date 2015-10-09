@@ -99,8 +99,8 @@
           graph, they can find the original cause of the issue rapidly. With ECM, designing OSGi
           based applications becomes easier and more fun.</p>
       </div>
-      <div class="bs-docs-featurette ecm-chapter" id="usage">
-        <h2 class="bs-docs-featurette-title ">Usage</h2>
+      <div class="bs-docs-featurette ecm-chapter" id="quickstart">
+        <h2 class="bs-docs-featurette-title ">Quick start</h2>
         <p>There are several ways to use the Everit Component Model. The easiest way is using
           OSGi extender pattern, while components can be created and started programmatically, too.</p>
         <h3 id="usage-extender">Using the Extender</h3>
@@ -195,68 +195,256 @@ public class MyActivator {
           documentation of <a href="#ecm-metadata">ecm-metadata</a> OSGi bundle!
         </p>
       </div>
-      <div class="bs-docs-featurette ecm-chapter" id="architecture">
-        <h2 class="bs-docs-featurette-title ">Architecture</h2>
-        <h3 id="component-container">Component Container</h3>
+      <div class="bs-docs-featurette ecm-chapter" id="specification">
+        <h2 class="bs-docs-featurette-title ">Specification</h2>
+        <h3 id="component-container">Component container</h3>
         <p>
-          A <i>Component Container</i> handles the instantiation of Components based on the <i>metadata</i>
-          of the Component and the available configuration. A <i>Component Container</i> has an <i>opened</i>
-          and a <i>closed</i> state. When the <i>Component Container</i> is opened, an OSGi service
-          is registered with the following interfaces:
+          A <i>Component Container</i> is responsible for the instantiation and lifecycle of <a
+            href="component-context">Component Contexts</a>. When the <i>Component Container</i> is
+          opened, an OSGi service is registered with the following interfaces:
+        </p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Interface</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="hidden-xs hidden-sm hidden-md">org.everit.osgi.ecm.component.resource.</span>ComponentContainer</td>
+              <td>Used to retrieve all information about the state of the container instance.
+                Programmers can list the instantiated components, get the <i>metadata</i> that
+                belongs to the component, etc.
+              </td>
+            </tr>
+            <tr>
+              <td><a
+                href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedService.html"><span
+                  class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedService</a></td>
+              <td>Only if the <a href="#TBD">configuration policy</a> of the container is
+                either <a href="#policy-optional">OPTIONAL</a> or <a href="#policy-required">REQUIRED</a>
+              </td>
+            </tr>
+            <tr>
+              <td><a
+                href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedServiceFactory.html"><span
+                  class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedServiceFactory</a></td>
+              <td>Only if the <a href="#TBD">configuration policy</a> of the container is <a
+                href="#policy-factory">FACTORY</a>.
+              </td>
+            </tr>
+            <tr>
+              <td><a
+                href="https://osgi.org/javadoc/r4v42/org/osgi/service/metatype/MetaTypeProvider.html"><span
+                  class="hidden-xs hidden-sm hidden-md">org.osgi.service.metatype.</span>MetaTypeProvider</a></td>
+              <td>Only if the <i>metatype</i> data belongs to the container.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          ECM relies on the <i>Configuration Admin</i> chapter of <i>OSGi Compendium
+            specification</i>. If any configuration is necessary, <i>ComponentContainer</i> OSGi service
+          is registered with <i>ManagedService</i> or <i>ManagedServiceFactory</i> interface. <i>Configuration
+            Admin</i> notifies the <i>Component Container</i> by calling the OSGi service if a new
+          configuration is available, a configuration was modified or a configuration was deleted.
+          The behavior of the Component Container depends on the configuration policy:
         </p>
         <ul>
           <li><p>
-              <strong>org.everit.osgi.ecm.component.resource.ComponentContainer</strong> can be used
-              to retrieve all information about the state of the container instance. Programmers can
-              list the instantiated components, get the <i>metadata</i> that belongs to the
-              component, etc.
+              <strong id="policy-ignore">IGNORE</strong>: Neither ManagedService nor
+              ManagedServieFactory interface is used when the ComponentContainer OSGi service is
+              registered. The container instantiates and opens the <a href="#component-context">Component
+                Context</a> as soon as the container is opened and all references of the component are
+              satisfied.
             </p></li>
           <li><p>
-              <strong><a
-                href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedService.html">org.osgi.service.cm.ManagedService</a></strong>
-              if the <a href="#TBD">configuration policy</a> of the container is either <i>OPTIONAL</i>
-              or <i>REQUIRED</i>.
+              <strong id="policy-optional">OPTIONAL</strong>: One <a href="#component-context">Component
+                Context</a> will be instantiated and opened as soon as the <i>Container</i> is started.
+              In case a configuration is available, the Component Context will be upgraded. <strong><span
+                class="text-danger">Although this is the default policy for components, we do
+                  not recommend using it. Strange behavior can happen. E.g.: A component is created
+                  during starting the framework than it is re-activated (and all dependent
+                  components are re-activated recursively) when Confguration Admin starts.</span></strong>
             </p></li>
           <li><p>
-              <strong><a
-                href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedServiceFactory.html">org.osgi.service.cm.ManagedServiceFactory</a></strong>
-              if the <a href="#TBD">configuration policy</a> of the container is <i>REQUIRED</i>.
+              <strong id="policy-required">REQUIRED</strong>: The <a href="#component-context">Component
+                Context</a> will be instantiated and opened only if a configuration is available. If the
+              configuration is not available anymore, the <i>Container</i> closes the <a
+                href="#component-context">Component Context</a>.
             </p></li>
           <li><p>
-              <strong><a
-                href="https://osgi.org/javadoc/r4v42/org/osgi/service/metatype/MetaTypeProvider.html">org.osgi.service.metatype.MetaTypeProvider</a></strong>
-              if the <i>metatype</i> data belongs to the container.
+              <strong id="policy-factory">FACTORY</strong>: The <i>Container</i> will instantiate
+              and open as many <a href="#component-context">Component Contexts</a> as many
+              configuration is available.
             </p></li>
         </ul>
-        <p>
-          ECM relies on the Configuration Admin chapter of OSGi Compendium specification. If any
-          configuration is necessary, the ComponentContainer OSGi service is registered with <i>ManagedService</i>
-          or <i>ManagedServiceFactory</i> interface. Configuration Admin notifies the Component
-          Container by calling the OSGi service if a new configuration is available, a configuration
-          was modified or a configuration was deleted. The behavior of the Component Container
-          depends on the configuration policy:
-        </p>
-        <ul>
-          <li><p>
-              <strong>IGNORE</strong>: Neither ManagedService nor ManagedServieFactory interface is
-              used when the ComponentContainer OSGi service is registered. The container
-              instantiates and activates the component as soon as the container is opened and all
-              references of the component are satisfied.
-            </p></li>
-          <li><p>
-              <strong>OPTIONAL</strong>: One component will be instantiated as soon as the container
-              is started. In case there is a configuration for the component, the component will be
-              upgraded. <strong><span class="text-danger">Although this is the
-                  default policy for components, we do not recommend using it. It makes the
-                  component uncertain.</span></strong>
-            </p></li>
-          <li><p>
-              <strong>REQUIRED</strong>: The component will be instantiated only if </strong>
-            </p></li>
-          <li><p></p></li>
-        </ul>
+        <div class="clearfix">
+          <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-0 text-center"
+            style="padding-bottom: 1em;">
+            <img alt="Container-Context relation with Factory configuration policy"
+              style="max-width: 100%;" src="container-context-factory.svg">
+          </div>
+          <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1 text-center"
+            style="padding-bottom: 1em;">
+            <img
+              alt="Container-Context relation with Ignore, Optional or Required configuration policy"
+              style="max-width: 100%;" src="container-context-simple.svg">
+          </div>
+        </div>
+        <h3 id="component-context">Component context</h3>
 
-        <h3 id="component-lifecycle">Component Lifecycle</h3>
+        <p>
+          <i>Component contexts</i> are instantiated and started by the <a
+            href="#component-container">Component containers</a>. One <i>Component context</i>
+          handles the lifecycle of exactly one <i>Component</i>.
+        </p>
+        <p>
+          The <a href="#">ComponentContext</a> instance can be used within a component to
+        </p>
+        <ul>
+          <li>get the current configuration of the component</li>
+          <li>access the <i>metadata</i> of the component via the <i>component container</i>
+          <li>access the <a
+            href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/BundleContext.html">BundleContext</a>
+            of the bundle that registered the <i>component container</i>
+          <li>register OSGi services</li>
+        </ul>
+        <p>
+          <strong class="text-danger">OSGi services should be registered always with <i>ComponentContext</i>
+            and not via <i>BundleContext</i> directly!
+          </strong> ECM can provide complete <a href="#">Component wiring</a> information only if OSGi
+          services are registered via <i>ComponentContext</i>.
+        </p>
+        <p>
+          Component developers can receive the <i>component context</i> by specifying it as a
+          parameter of the <a href="">activate</a> method of the component.
+        </p>
+
+
+        <h3 id="component-lifecycle">Component lifecycle</h3>
+        <p>A component might have one of the following states:</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>INACTIVE</td>
+              <td>The component is not yet initialized or it was removed. It is hard to catch
+                this state as
+                <ul>
+                  <li>As soon as the component context is created, initialization starts.</li>
+                  <li>As soon as the component context is inactivated, it is removed from the
+                    system completely (as this happens when the container is closed).</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>UNSATISFIED</td>
+              <td>The component has one or more unsatisfied <a href="reference-handling">references</a>.
+              </td>
+            </tr>
+            <tr>
+              <td>STARTING</td>
+              <td><p>The component is trying to reach the ACTIVE phase. One of the
+                  following options happen currently to the component:</p>
+                <ul>
+                  <li>The <i>Component context</i> currently instantiates the <i>component</i>
+                  </li>
+                  <li>The <i>Component context</i> calls the setters of the <i>component
+                      instance</i>
+                  </li>
+                  <li>The <a href="#activate-method">Activate</a> method of the <i>component
+                      instance</i> method is currently running
+                  </li>
+                  <li>The <i>Component context</i> currently registers the <i>component
+                      instance</i> as an OSGi service.
+                  </li>
+                </ul></td>
+            </tr>
+            <tr>
+              <td>ACTIVE</td>
+              <td>The component becomes active if the the STARTING phase ran without any
+                exception and if it is defined so, the instance is registered as an OSGi service.</td>
+            </tr>
+            <tr>
+              <td>UPDATING_CONFIGURATION</td>
+              <td><p>
+                  The component was already in <i>ACTIVE</i> state when new <i>configuraiton</i> has
+                  been applied that affects only <a href="#">dynamic attributes</a>. The component
+                  leaves this state if
+                </p>
+                <ul>
+                  <li>all properties are updated successfully, or an exception was thrown from
+                    one of the setters</li>
+                  <li>if specified, <a href="#">update method</a> was called and it returned
+                    successfully or an exception was thrown from it.
+                  </li>
+                </ul></td>
+            </tr>
+            <tr>
+              <td>STOPPING</td>
+              <td>The deactivate function of the component is currently running if one is
+                specified. Several reasons reason can stop a component:
+                <ul>
+                  <li>The component is destroyed as the configuration behind the component is
+                    deleted</li>
+                  <li>The component is destroyed as the <a href="#component-container">container</a>
+                    of the component is closed.
+                  </li>
+                  <li>Due to a non-dynamic configuration update, the component has to be
+                    restarted. In this case the first step is stopping the component.</li>
+                  <li>The component was <i>STARTING</i> or it was in <i>ACTIVE</i> state and
+                    there was a failure. In the end of STOPPING, the component will get the <i>FAILED</i>
+                    state.
+                  </li>
+                  <li>The component was <i>ACTIVE</i> and one of the references became
+                    unsatisfied.
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>FAILED</td>
+              <td>A component is in the failed state if any of the setter-, the activate- or
+                the update method was called by the <i>context</i> and the method threw an
+                exception.
+              </td>
+            </tr>
+            <tr>
+              <td>FAILED_PERMANENT</td>
+              <td><p>
+                  The component will be permanently failed if <i>metadata</i> of the component is
+                  inconsistent. E.g.:
+                </p>
+                <ul>
+                  <li>The class of the component cannot be found or instantiated.</li>
+                  <li>Specified <i>Activate</i>, <i>Update</i> or <i>Deactivate</i> method does
+                    not exist
+                  </li>
+                  <li>Any of the specified setters does not exist</li>
+                </ul></td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 id="component-attributes">Component attributes</h3>
+        <h3 id="component-references">Component requirements</h3>
+        <h4>Service reference</h4>
+        <h4>Bundle-Capability reference</h4>
+        <h3>Component capabilities</h3>
+        <h4>Service capability</h4>
+        <p>Manual and automatic...</p>
+        <h3 id="component-methods">Component methods</h3>
+        <h4>Setters</h4>
+        <h4>Activate method</h4>
+        <h4>Update method</h4>
+        <h4>Deactivate method</h4>
+        <h3>Metatype support</h3>
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="modules">
         <h2 class="bs-docs-featurette-title ">OSGi Bundles</h2>
@@ -282,12 +470,19 @@ public class MyActivator {
         <ul class="nav nav-pills nav-stacked everit-affix affix-top" data-spy="affix"
           data-offset-top="350" data-offset-bottom="140">
           <li class=""><a href="#introduction">Introduction</a></li>
-          <li class=""><a href="#usage">Usage</a>
+          <li class=""><a href="#quickstart">Quick start</a>
             <ul class="nav nav-pills nav-stacked">
               <li class=""><a href="#usage-extender">Using the extender</a></li>
               <li class=""><a href="#usage-programmatic">Programmatic way</a></li>
             </ul></li>
-          <li class=""><a href="#osgi-bundles">OSGi Bundles</a>
+          <li class=""><a href="#specification">Specification</a>
+            <ul class="nav nav-pills nav-stacked">
+              <li class=""><a href="#component-container">Component container</a></li>
+              <li class=""><a href="#component-context">Component context</a></li>
+              <li class=""><a href="#component-lifecycle">Component lifecycle</a></li>
+            </ul></li>
+          <li class=""><a href="#reference-handling">Reference handling</a></li>
+          <li class=""><a href="#osgi-bundles">OSGi Bundles</a></li>
         </ul>
       </nav>
     </div>
