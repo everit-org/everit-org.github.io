@@ -324,7 +324,11 @@ public class MyActivator {
 
 
         <h3 id="component-lifecycle">Component lifecycle</h3>
-        <p>A component might have one of the following states:</p>
+        <h4>Component states</h4>
+        <p>
+          The <a href="#component-context">component context</a> manages the lifecycle of the
+          component. A component might have one of the following states:
+        </p>
         <table class="table">
           <thead>
             <tr>
@@ -389,8 +393,8 @@ public class MyActivator {
             </tr>
             <tr>
               <td>STOPPING</td>
-              <td>The deactivate function of the component is currently running if one is
-                specified. Several reasons reason can stop a component:
+              <td><p>The deactivate function of the component is currently running if one
+                  is specified. Several reasons reason can stop a component:</p>
                 <ul>
                   <li>The component is destroyed as the configuration behind the component is
                     deleted</li>
@@ -407,7 +411,8 @@ public class MyActivator {
                     unsatisfied.
                   </li>
                 </ul>
-              </td>
+                <p>By the end of the STOPPING state, the component context drops the component
+                  instance.</p></td>
             </tr>
             <tr>
               <td>FAILED</td>
@@ -432,7 +437,102 @@ public class MyActivator {
             </tr>
           </tbody>
         </table>
+        <h4>Component configuration upgrade</h4>
+        <p>
+          The configuration of the component is upgraded if the <a href="#component-context">component
+            context</a> is already created and a new configuration is available for the same context.
+          This might happen in the following cases:
+        </p>
+        <ul>
+          <li><p>
+              If the <a href="configuration-policy">configuration policy</a> of the component is <a
+                href="#policy-optional">OPTIONAL</a>, the <i>component context</i> is created with
+              default configuration values. After that, any configuration creation, modification or
+              deletion via Configuration Admin will result in a component configuration upgrade.
+            </p></li>
+          <li><p>
+              If the <a href="configuration-policy">configuration policy</a> is <a
+                href="#policy-required">REQUIRED</a>, the <a href="#component-context">component
+                context</a> will be created as soon as there is a configuration for the component. A
+              component configuration upgrade will happen always when the configuration is modified
+              via Configuration Admin.
+            </p></li>
+          <li><p>
+              If the <a href="configuration-policy">configuration policy</a> is <a
+                href="#policy-factory">FACTORY</a>, as many <a href="#component-context">component
+                context</a> will be created, as many configuration entry is available for the container
+              in Configuration Admin. When an entry is changed, the connected <a
+                href="#component-context">component context</a> will be updated.
+            </p></li>
+        </ul>
+        <p>Depending on the state of the component and the changed attributes, a configuration
+          upgrade can cause different events:</p>
+        <ul>
+          <li><p>If no component attribute is changed in the configuration, nothing will
+              happen. It does not matter if such property is configured, that is not specified in
+              the component.</p></li>
+          <li><p>
+              If the component is <a href="#state-failed-permanent">FAILED_PERMANENT</a>, nothing
+              will happen.
+            </p></li>
+          <li><p>
+              If the component is <a href="#state-active">ACTIVE</a> and any of the requirements
+              become unsatisfied, the component will stop (<a href="#state-stopping">STOPPING</a>
+              state) and than becomes <a href="#state-unsatisfied">UNSATISFIED</a>.
+            </p></li>
+          <li><p>
+              If the component is <a href="#state-active">ACTIVE</a> and only <i>dynamic</i>
+              attributes and requirements are changed, the <a href="#setter-method">setter
+                methods</a> will be called first, and than the <a href="#update-method">update
+                method</a>.
+            </p></li>
+          <li><p>
+              If the component is <a href="#state-active">ACTIVE</a> and any of the <a
+                href="#requirements">requirements</a> becomes unsatisfied, the component will be <a
+                href="#state-stopping">stopped</a> and become <a href="#state-unsatisfied">UNSATISFIED</a>
+              in the end.
+            </p></li>
+          <li><p>
+              If the component is <a href="#state-active">ACTIVE</a> and any of the <i>non-dynamic</i>
+              attributes or requirements is changed, the component will be restarted.
+            </p></li>
+          <li><p>
+              If the component is <a href="#state-failed">FAILED</a> and after the configuration
+              there are unsatisfied requirements, the component will become <a
+                href="#state-unsatisfied">UNSATISFIED</a>.
+            </p></li>
+          <li><p>
+              If the component is <a href="#state-unsatisfied">UNSATISFIED</a> or <a
+                href="#state-failed">FAILED</a> and after the configuration upgrade all requirements
+              is satisfied, the component will be started.
+            </p></li>
+        </ul>
         <h3 id="component-attributes">Component attributes</h3>
+        <h4>Attribute types</h4>
+        <p>An attribute always has one of the following types: boolean, byte, char, double,
+          float, int, long, password, short, String.</p>
+        <h4>Attribute cardinality</h4>
+        <p>
+          An attribute might be optional or required. In case of optional, the attribute value might
+          be <i>undefined</i>. In case the attribute is not defined, its <i>setter</i> will not be
+          called.
+        </p>
+        <p>
+          An attribute has a "<i>multiple</i>" flag. If the "<i>multiple</i>" flag is <i>true</i>,
+          the attribute can have more than one values. If a <i>setter</i> method is defined for a <i>multiple=true</i>
+          attribute, the parameter of the setter must be the array of the attribute type. E.g.:
+          int[], String[], ...
+        </p>
+        <h4>Dynamic attribute</h4>
+        <p>Every time the value of the attribute changes (most likely via Configuration Admin)
+          the following will happen:</p>
+        <ul>
+          <li>if the attribute is <i>non-dynamic</i>, the component will be restarted.
+          </li>
+          <li>if the attribute is <i>dynamic</i>, the <i>setter</i> method of the component (if
+            there is any) will be called and the if the <a href="update-method">update method</a> is
+            defined, it will be called as well.
+        </ul>
         <h3 id="component-references">Component requirements</h3>
         <h4>Service reference</h4>
         <h4>Bundle-Capability reference</h4>
@@ -441,9 +541,9 @@ public class MyActivator {
         <p>Manual and automatic...</p>
         <h3 id="component-methods">Component methods</h3>
         <h4>Setters</h4>
-        <h4>Activate method</h4>
-        <h4>Update method</h4>
-        <h4>Deactivate method</h4>
+        <h4 id="activate-method">Activate method</h4>
+        <h4 id="update-method">Update method</h4>
+        <h4 id="deactivate-method">Deactivate method</h4>
         <h3>Metatype support</h3>
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="modules">
