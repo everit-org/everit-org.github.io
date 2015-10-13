@@ -197,6 +197,8 @@ public class MyActivator {
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="specification">
         <h2 class="bs-docs-featurette-title ">Specification</h2>
+        <h3 id="component-metadata">Component metadata</h3>
+        <p>A component is described by its metadata. The metadata</p>
         <h3 id="component-container">Component container</h3>
         <p>
           A <i>Component Container</i> is responsible for the instantiation and lifecycle of <a
@@ -324,11 +326,21 @@ public class MyActivator {
 
 
         <h3 id="component-lifecycle">Component lifecycle</h3>
+        <div class="text-center" style="padding-top: 1em;">
+          <img alt="Component Lifecycle Diagram" src="lifecycle.svg" style="max-width: 100%;">
+        </div>
         <h4>Component states</h4>
         <p>
           The <a href="#component-context">component context</a> manages the lifecycle of the
           component. A component might have one of the following states:
         </p>
+        <div class="row">
+          <div class="col-sm-3">INACTIVE</div>
+          <div class="col-sm-9">
+            The <a href="component-context">component context</a> that manages this component is
+            closed.
+          </div>
+        </div>
         <table class="table">
           <thead>
             <tr>
@@ -339,13 +351,8 @@ public class MyActivator {
           <tbody>
             <tr>
               <td>INACTIVE</td>
-              <td>The component is not yet initialized or it was removed. It is hard to catch
-                this state as
-                <ul>
-                  <li>As soon as the component context is created, initialization starts.</li>
-                  <li>As soon as the component context is inactivated, it is removed from the
-                    system completely (as this happens when the container is closed).</li>
-                </ul>
+              <td>The <a href="component-context">component context</a> that manages this
+                component is closed.
               </td>
             </tr>
             <tr>
@@ -377,7 +384,7 @@ public class MyActivator {
                 exception and if it is defined so, the instance is registered as an OSGi service.</td>
             </tr>
             <tr>
-              <td>UPDATING_CONFIGURATION</td>
+              <td>UPDATING CONFIGURATION</td>
               <td><p>
                   The component was already in <i>ACTIVE</i> state when new <i>configuraiton</i> has
                   been applied that affects only <a href="#">dynamic attributes</a>. The component
@@ -422,7 +429,7 @@ public class MyActivator {
               </td>
             </tr>
             <tr>
-              <td>FAILED_PERMANENT</td>
+              <td>FAILED PERMANENT</td>
               <td><p>
                   The component will be permanently failed if <i>metadata</i> of the component is
                   inconsistent. E.g.:
@@ -533,9 +540,12 @@ public class MyActivator {
             there is any) will be called and the if the <a href="update-method">update method</a> is
             defined, it will be called as well.
         </ul>
+
         <h3 id="component-references">Component requirements</h3>
         <h4>Service reference</h4>
         <h4>Bundle-Capability reference</h4>
+        <h4>Configuration types</h4>
+        <h4>Requirement cardinality</h4>
         <h3>Component capabilities</h3>
         <h4>Service capability</h4>
         <p>Manual and automatic...</p>
@@ -577,6 +587,7 @@ public class MyActivator {
             </ul></li>
           <li class=""><a href="#specification">Specification</a>
             <ul class="nav nav-pills nav-stacked">
+              <li class=""><a href="#component-metadata">Component metadata</a></li>
               <li class=""><a href="#component-container">Component container</a></li>
               <li class=""><a href="#component-context">Component context</a></li>
               <li class=""><a href="#component-lifecycle">Component lifecycle</a></li>
