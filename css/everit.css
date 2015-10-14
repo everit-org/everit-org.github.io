@@ -135,3 +135,27 @@ pre.prettyprint {
 a.coming-soon {
     opacity: 0.5;
 }
+
+.responsive-table {
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.responsive-table>hr {
+  border-top: 1px solid #ddd;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.responsive-table>hr.double-hr {
+  border-top: 2px solid #ddd;
+}
+.state-transition-label {
+  text-align: left;
+  font-family: "Courier New", Courier, monospace;
+  padding-left: 5rem;
+  text-indent: -5rem;
+}
+.empty-separator {
+  height: 1em;
+  width: 100%;
+}

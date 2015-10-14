@@ -205,46 +205,62 @@ public class MyActivator {
             href="component-context">Component Contexts</a>. When the <i>Component Container</i> is
           opened, an OSGi service is registered with the following interfaces:
         </p>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Interface</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="hidden-xs hidden-sm hidden-md">org.everit.osgi.ecm.component.resource.</span>ComponentContainer</td>
-              <td>Used to retrieve all information about the state of the container instance.
-                Programmers can list the instantiated components, get the <i>metadata</i> that
-                belongs to the component, etc.
-              </td>
-            </tr>
-            <tr>
-              <td><a
-                href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedService.html"><span
-                  class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedService</a></td>
-              <td>Only if the <a href="#TBD">configuration policy</a> of the container is
-                either <a href="#policy-optional">OPTIONAL</a> or <a href="#policy-required">REQUIRED</a>
-              </td>
-            </tr>
-            <tr>
-              <td><a
+        <div class="responsive-table">
+          <div class="row hidden-xs">
+            <div class="col-sm-3 col-lg-6">
+              <b>Interface</b>
+            </div>
+            <div class="col-sm-9 col-lg-6">
+              <b>Description</b>
+            </div>
+          </div>
+          <hr class="double-hr hidden-xs" />
+          <div class="empty-separator visible-xs">&nbsp;</div>
+          <div class="row">
+            <div class="col-sm-3 col-lg-6">
+              <span class="hidden-xs hidden-sm hidden-md">org.everit.osgi.ecm.component.resource.</span>ComponentContainer
+            </div>
+            <div class="col-sm-9 col-lg-6">
+              Used to retrieve all information about the state of the container instance.
+              Programmers can list the instantiated components, get the <i>metadata</i> that belongs
+              to the component, etc.
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3 col-lg-6">
+              <a href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedService.html"><span
+                class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedService</a>
+            </div>
+            <div class="col-sm-9 col-lg-6">
+              Only if the <a href="#TBD">configuration policy</a> of the container is either <a
+                href="#policy-optional">OPTIONAL</a> or <a href="#policy-required">REQUIRED</a>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3 col-lg-6">
+              <a
                 href="https://osgi.org/javadoc/r4v42/org/osgi/service/cm/ManagedServiceFactory.html"><span
-                  class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedServiceFactory</a></td>
-              <td>Only if the <a href="#TBD">configuration policy</a> of the container is <a
+                class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedServiceFactory</a>
+            </div>
+            <div class="col-sm-9 col-lg-6">
+              Only if the <a href="#TBD">configuration policy</a> of the container is <a
                 href="#policy-factory">FACTORY</a>.
-              </td>
-            </tr>
-            <tr>
-              <td><a
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3 col-lg-6">
+              <a
                 href="https://osgi.org/javadoc/r4v42/org/osgi/service/metatype/MetaTypeProvider.html"><span
-                  class="hidden-xs hidden-sm hidden-md">org.osgi.service.metatype.</span>MetaTypeProvider</a></td>
-              <td>Only if the <i>metatype</i> data belongs to the container.
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                class="hidden-xs hidden-sm hidden-md">org.osgi.service.metatype.</span>MetaTypeProvider</a>
+            </div>
+            <div class="col-sm-9 col-lg-6">
+              Only if the <i>metatype</i> data belongs to the container.
+            </div>
+          </div>
+        </div>
         <p>
           ECM relies on the <i>Configuration Admin</i> chapter of <i>OSGi Compendium
             specification</i>. If any configuration is necessary, <i>ComponentContainer</i> OSGi service
@@ -326,124 +342,307 @@ public class MyActivator {
 
 
         <h3 id="component-lifecycle">Component lifecycle</h3>
-        <div class="text-center" style="padding-top: 1em;">
-          <img alt="Component Lifecycle Diagram" src="lifecycle.svg" style="max-width: 100%;">
-        </div>
-        <h4>Component states</h4>
+        <h4 id="component-states">Component states</h4>
         <p>
           The <a href="#component-context">component context</a> manages the lifecycle of the
           component. A component might have one of the following states:
         </p>
-        <div class="row">
-          <div class="col-sm-3">INACTIVE</div>
-          <div class="col-sm-9">
-            The <a href="component-context">component context</a> that manages this component is
-            closed.
+        <div class="responsive-table">
+          <div class="row hidden-xs">
+            <div class="col-sm-5 col-md-4 col-lg-3">
+              <b>State</b>
+            </div>
+            <div class="col-sm-7">
+              <b>Description</b>
+            </div>
+          </div>
+          <hr class="double-hr hidden-xs" />
+          <div class="empty-separator visible-xs">&nbsp;</div>
+          <div id="state-inactive" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">INACTIVE</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The <a href="#component-context">component context</a> that manages this component is
+              closed.
+            </div>
+          </div>
+          <hr />
+          <div id="state-unsatisfied" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">UNSATISFIED</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The component has one or more unsatisfied <a href="requirements">requirements</a>.
+            </div>
+          </div>
+          <hr />
+          <div id="state-starting" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">STARTING</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              <p>
+                The <a href="#component-context">component context</a> is starting the component.
+                The starting process contains the following steps:
+              </p>
+              <ol>
+                <li>The <a href="#component-context">component context</a> instantiates the <i>component</i>
+                  class.
+                </li>
+                <li>The <a href="#component-context">component context</a> calls the setters of
+                  the <i>component instance</i>
+                </li>
+                <li>The <a href="#activate-method">Activate</a> method of the <i>component
+                    instance</i> method is called
+                </li>
+                <li>The <i>Component context</i> registers the <i>component instance</i> as an
+                  OSGi service if automatic service registration is defined.
+                </li>
+              </ol>
+            </div>
+          </div>
+          <hr />
+          <div id="state-active" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">ACTIVE</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">The component is active and if defined so, it is registered
+              as an OSGi service.</div>
+          </div>
+          <hr />
+          <div id="state-updating-configuration" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">UPDATING_CONFIGURATION</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The <a href="#component-container">component container</a> is currently updating
+              non-dynamic attributes on the <a href="#component-context">component context</a>.
+            </div>
+          </div>
+          <hr />
+          <div id="state-stopping" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">STOPPING</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              <p>
+                The <a href="#component-context">component context</a> started the stopping process
+                on the component instance but has not finished yet. The stopping process runs the
+                following steps:
+              </p>
+              <ol>
+                <li>The <a href="#component-context">component context</a> unregisters the OSGi
+                  service that was automatically registered based on the component instance (if
+                  automatic service registration was defined).
+                </li>
+                <li>The <a href="#component-context">component context</a> calls the <a
+                  href="#deactivate-method">deactivate method</a> on the <i>component instance</i>
+                  if one defined.
+                </li>
+                <li>The <a href="#component-context">component context</a> checks whether all
+                  OSGi services were unregistered by the <a href="#deactivate-method">deactivate
+                    method</a> that were registered with the functions of the <a
+                  href="#component-context">component context</a>. If not, the <a
+                  href="#component-context">component context</a> unregisters them and writes a <i>WARN</i>
+                  message into the log.
+                </li>
+              </ol>
+            </div>
+          </div>
+          <hr />
+          <div id="state-failed" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">FAILED</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              An exception was thrown by
+              <ul>
+                <li>the <a href="#component-context">component context</a> during validating
+                  the configuration of the component.
+                </li>
+                <li>any of the <a href="#method-method">setter methods</a> of the <i>component
+                    instance</i>.
+                </li>
+                <li>the <a href="#activate-method">activate method</a> of the <i>component
+                    instance.</i></li>
+                <li>the <a href="#update-method">update method</a> of the <i>component
+                    instance.</i></li>
+              </ul>
+            </div>
+          </div>
+          <hr />
+          <div id="state-failed-permanent" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">FAILED_PERMANENT</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              <p>
+                The component will be permanently failed if <i>metadata</i> of the component is
+                inconsistent. E.g.:
+              </p>
+              <ul>
+                <li>The class of the component cannot be found or instantiated.</li>
+                <li>Specified <i>Activate</i>, <i>Update</i> or <i>Deactivate</i> method does
+                  not exist
+                </li>
+                <li>Any of the specified setters does not exist</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>State</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>INACTIVE</td>
-              <td>The <a href="component-context">component context</a> that manages this
-                component is closed.
-              </td>
-            </tr>
-            <tr>
-              <td>UNSATISFIED</td>
-              <td>The component has one or more unsatisfied <a href="reference-handling">references</a>.
-              </td>
-            </tr>
-            <tr>
-              <td>STARTING</td>
-              <td><p>The component is trying to reach the ACTIVE phase. One of the
-                  following options happen currently to the component:</p>
-                <ul>
-                  <li>The <i>Component context</i> currently instantiates the <i>component</i>
-                  </li>
-                  <li>The <i>Component context</i> calls the setters of the <i>component
-                      instance</i>
-                  </li>
-                  <li>The <a href="#activate-method">Activate</a> method of the <i>component
-                      instance</i> method is currently running
-                  </li>
-                  <li>The <i>Component context</i> currently registers the <i>component
-                      instance</i> as an OSGi service.
-                  </li>
-                </ul></td>
-            </tr>
-            <tr>
-              <td>ACTIVE</td>
-              <td>The component becomes active if the the STARTING phase ran without any
-                exception and if it is defined so, the instance is registered as an OSGi service.</td>
-            </tr>
-            <tr>
-              <td>UPDATING CONFIGURATION</td>
-              <td><p>
-                  The component was already in <i>ACTIVE</i> state when new <i>configuraiton</i> has
-                  been applied that affects only <a href="#">dynamic attributes</a>. The component
-                  leaves this state if
-                </p>
-                <ul>
-                  <li>all properties are updated successfully, or an exception was thrown from
-                    one of the setters</li>
-                  <li>if specified, <a href="#">update method</a> was called and it returned
-                    successfully or an exception was thrown from it.
-                  </li>
-                </ul></td>
-            </tr>
-            <tr>
-              <td>STOPPING</td>
-              <td><p>The deactivate function of the component is currently running if one
-                  is specified. Several reasons reason can stop a component:</p>
-                <ul>
-                  <li>The component is destroyed as the configuration behind the component is
-                    deleted</li>
-                  <li>The component is destroyed as the <a href="#component-container">container</a>
-                    of the component is closed.
-                  </li>
-                  <li>Due to a non-dynamic configuration update, the component has to be
-                    restarted. In this case the first step is stopping the component.</li>
-                  <li>The component was <i>STARTING</i> or it was in <i>ACTIVE</i> state and
-                    there was a failure. In the end of STOPPING, the component will get the <i>FAILED</i>
-                    state.
-                  </li>
-                  <li>The component was <i>ACTIVE</i> and one of the references became
-                    unsatisfied.
-                  </li>
-                </ul>
-                <p>By the end of the STOPPING state, the component context drops the component
-                  instance.</p></td>
-            </tr>
-            <tr>
-              <td>FAILED</td>
-              <td>A component is in the failed state if any of the setter-, the activate- or
-                the update method was called by the <i>context</i> and the method threw an
-                exception.
-              </td>
-            </tr>
-            <tr>
-              <td>FAILED PERMANENT</td>
-              <td><p>
-                  The component will be permanently failed if <i>metadata</i> of the component is
-                  inconsistent. E.g.:
-                </p>
-                <ul>
-                  <li>The class of the component cannot be found or instantiated.</li>
-                  <li>Specified <i>Activate</i>, <i>Update</i> or <i>Deactivate</i> method does
-                    not exist
-                  </li>
-                  <li>Any of the specified setters does not exist</li>
-                </ul></td>
-            </tr>
-          </tbody>
-        </table>
+        <h4>State transitions</h4>
+        <div class="text-center" style="padding-top: 1em;">
+          <img alt="Component Lifecycle Diagram" src="lifecycle.svg" style="max-width: 100%;">
+        </div>
+        <div class="responsive-table">
+          <div class="row hidden-xs">
+            <div class="col-sm-5 col-lg-4">
+              <b>State transition</b>
+            </div>
+            <div class="col-sm-7 col-lg-8">
+              <b>Description</b>
+            </div>
+          </div>
+          <hr class="double-hr hidden-xs" />
+          <div class="empty-separator visible-xs">&nbsp;</div>
+          <div id="transition-inactive-failed_permanent" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>0:</strong> <a href="#state-inactive">INACTIVE</a> &rarr;&nbsp;<a
+                  href="#state-failed-permanent">FAILED_PERMANENT</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8">
+              <p>
+                After the <a href="#component-context">component context</a> is opened, it validates
+                the <a href="#component-metadata">metadata of the component</a>. If any of the
+                functions cannot be found, they do not have the right parameters or they do not have
+                a default constructor, the component gets <a href="#state-failed-permanent">failed
+                  permanently</a>.
+              </p>
+              <p class="text-danger">Please note that in the current release, the validation is
+                only done during starting the component. In future releases, the whole validation
+                will be moved to the component container creation so permanent failure will be
+                visible only in the logs.</p>
+            </div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>1:</strong> <a href="#state-inactive">INACTIVE</a> &rarr;&nbsp;<a
+                  href="#state-starting">STARTING</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8">
+              If all of the <a href="#component-requirement">requirements of the component</a> are
+              satisfied, the <a href="#state-starting">starting process</a> will start.
+            </div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>2:</strong> <a href="#state-inactive">INACTIVE</a> &rarr;&nbsp;<a
+                  href="#state-unsatisfied">UNSATISFIED</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8"></div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>3:</strong> <a href="#state-unsatisfied">UNSATISFIED</a> &rarr;&nbsp;<a
+                  href="#state-starting">STARTING</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8"></div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>4:</strong> <a href="#state-starting">STARTING</a> &rarr;&nbsp;<a
+                  href="#state-failed">FAILED</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8"></div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>5:</strong> <a href="#state-failed">FAILED</a> &rarr;&nbsp;<a
+                  href="#state-starting">STARTING</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8"></div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>6:</strong> <a href="#state-starting">STARTING</a> &rarr;&nbsp;<a
+                  href="#state-active">ACTIVE</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8"></div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>7:</strong> <a href="#state-active">ACTIVE</a>
+                &rarr;&nbsp;Dynamic&nbsp;update
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8"></div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>8:</strong> Dynamic&nbsp;update &rarr;&nbsp;<a href="#state-active">ACTIVE</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8"></div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-lg-4">
+              <div class="state-transition-label">
+                <strong>9:</strong> Dynamic&nbsp;update &rarr;&nbsp;<a href="#state-failed">FAILED</a>
+              </div>
+            </div>
+            <div class="col-sm-7 col-lg-8"></div>
+          </div>
+          <hr />
+          <div id="transition-inactive-starting" class="row">
+            <div class="col-sm-5 col-md-4 state-transition-label">
+              <strong>10:</strong> <a href="#state-active">ACTIVE</a> &rarr;&nbsp;<a
+                href="#state-stopping">STOPPING</a>
+            </div>
+          </div>
+          <div class="col-sm-7 col-lg-8"></div>
+        </div>
+        <hr />
+        <div id="transition-inactive-starting" class="row">
+          <div class="col-sm-5 col-lg-4">
+            <div class="state-transition-label">
+              <strong>11:</strong> <a href="#state-stopping">STOPPING</a> &rarr;&nbsp;<a
+                href="#state-updating-configuration">UPDATING_CONFIGURATION</a>
+            </div>
+          </div>
+          <div class="col-sm-7 col-lg-8">blalbalas</div>
+        </div>
+        <hr />
+        <div id="transition-inactive-starting" class="row">
+          <div class="col-sm-5 col-lg-4">
+            <div class="state-transition-label">Transition X</div>
+          </div>
+          <div class="col-sm-7 col-lg-8"></div>
+        </div>
+        <hr />
+        <div id="transition-inactive-starting" class="row">
+          <div class="col-sm-5 col-lg-4">
+            <div class="state-transition-label">Transition X</div>
+          </div>
+          <div class="col-sm-7 col-lg-8"></div>
+        </div>
+        <hr />
+        <div id="transition-inactive-starting" class="row">
+          <div class="col-sm-5 col-lg-4">
+            <div class="state-transition-label">Transition X</div>
+          </div>
+          <div class="col-sm-7 col-lg-8"></div>
+        </div>
+
         <h4>Component configuration upgrade</h4>
         <p>
           The configuration of the component is upgraded if the <a href="#component-context">component
@@ -635,7 +834,6 @@ public class MyActivator {
       })();
     </script>
   <script src="../js/prettify/run_prettify.js"></script>
-
 </body>
 
 </html>
