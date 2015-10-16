@@ -159,3 +159,8 @@ a.coming-soon {
   height: 1em;
   width: 100%;
 }
+.block-image {
+  max-width: 100%;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}

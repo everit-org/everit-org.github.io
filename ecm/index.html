@@ -762,8 +762,10 @@ public class MyActivator {
 
         <h3 id="component-attributes">Component attributes</h3>
         <h4>Attribute types</h4>
-        <p>An attribute always has one of the following types: boolean, byte, char, double,
-          float, int, long, password, short, String.</p>
+        <p>
+          An attribute always has one of the following types: <i>boolean, byte, char, double,
+            float, int, long, password, short, String</i>.
+        </p>
         <h4>Attribute cardinality</h4>
         <p>
           An attribute might be optional or required. In case of optional, the attribute value might
@@ -787,33 +789,165 @@ public class MyActivator {
             defined, it will be called as well.
         </ul>
 
-        <h3 id="component-references">Component requirements</h3>
+        <h3 id="component-references">Component references</h3>
+        <div class="text-center">
+          <img alt="Component, Reference, Requirement, Capability relationship"
+            src="component-references.svg" class="block-image" />
+        </div>
         <p>
-          Components might have zero or more requirements. A component can be <a
-            href="#state-starting">started</a> only when all requirements are satisfied. While <a
-            href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a> supports
-          only one kind of reference, <i>Everit Component Model</i> supports two type of
+          Components can have zero or more references. References can have zero or more
+          requirements, based on the <a href="#reference-cardinality">cardinality of the
+            reference</a>.
+        </p>
+        <p>
+          The <a href="#component-context">component context</a> <a href="#state-starting">starts</a>
+          the component only if all references of the component are satisfied. A reference is
+          satisfied if all requirements of the reference are wired to 1-1 matching capability.
+        </p>
+        <p>Every requirement is specified with the following properties:</p>
+        <ul>
+          <li><strong>Requirement Id:</strong> The id of the requirement.</li>
+          <li><strong>Attributes:</strong> Key-value pairs that can be used by the programmer
+            of the component.</li>
+          <li><strong>Directives:</strong> At the moment, only <i>filter</i> directive is
+            supported. The requirement becomes satisfied, if there is a capability with a specific
+            attribute set that matches with OSGi filter expression defined by the filter directive.</li>
+        </ul>
+        <p>
+          While <a href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a>
+          supports only one kind of reference, <i>Everit Component Model</i> supports two type of
           requirements: <a href="#requirement-service-reference">OSGi service requirements</a> and <a
             href="#requirement-bundle-capability">Bundle-Capability requirements</a>.
         </p>
         <h4>Configuration modes</h4>
-        
-        <h4>Requirement cardinality</h4>
-        The main difference between Everit Component Model and <a
-          href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a> is that
-        they handle the cardinality of
+        <h5 id="requirement-config-filter">Filter expression</h5>
+        <p>
+          Like in <a href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a>,
+          the references of <i>ECM components</i> can also be configured with OSGi service filters.
+          E.g.:
+        </p>
+        <pre>myReference.target = (service.pid=MyDataSource_XXXX-XXXX-XXXX-XXX)</pre>
+        <p>If no filter is defined, every capability with the same namespace will match the
+          requiement. The filter expression can filter based on the attributes of the capability.</p>
+        <p>
+          In case the reference configuration is <i>OSGi filter</i> based, each requirement will be
+          created with the following definition:
+        </p>
+        <ul>
+          <li><strong>Requirement Id:</strong> An incremented number starting with 0. If the <a
+            href="#reference-cardinality">cardinality</a> of the reference allows the definition of
+            <i>multiple</i> requirements, the requirement ids in the array of requirements will be
+            0, 1, ...</li>
+          <li><strong>Attributes:</strong> The requirements will have no attribute</li>
+          <li><strong>Directives:</strong> The requirements will have one <i>filter</i>
+            directive if an expression is defined.</li>
+        </ul>
+        <h5 id="requirement-config-clause">Clause</h5>
+        <i>Everit Component Model</i> also supports a more complex configuration mode for
+        references. During the development of a component, programmers can specify that a reference
+        should be configured with a clause. In general, a clause looks like this:
+        <pre>myReference.clause = requirementId;attr1=val1;attr2=val2;filter:=(key=value)</pre>
+        A clause is built up from the following parts:
+        <ul>
+          <li><strong>Requirement Id:</strong> The clause starts with the id of the
+            requirement. Requirement id must be unique within the scope of the reference.</li>
+          <li><strong>Attributes:</strong> The clause can contain yero or more attributes
+            separated by semicolon. The attribute is built up from a key-value pair where the key is
+            separated with an equality (=) character from the value.</li>
+          <li><strong>Filter directive:</strong> A filter can be optionally defined. If no
+            filter is defined, every capability with the same namespace will match the requiement.
+            The filter expression can filter based on the attributes of the capability. Directives
+            use (:=) as key-value separator.</li>
+        </ul>
+        <pre>
+servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_XXXX_XXXX_XXXX_XXXX)",
+                   "login;url-pattern=/login;filter:=(service.pid=LoginServlet_XXXX_XXXX_XXXX_XXXX)" ]</pre>
+        <p>
+          The example above shows a snippet from the configuration of <a
+            href="https://github.com/everit-org/jetty-server-ecm">Everit Jetty ServletContext
+            Component</a>. The component uses the <i>requirement id</i> as servlet name. In the example,
+          two servlets are pulled. They will be accessible on the path that is defined with the <i>url-pattern</i>
+          attribute of the claues.
+        </p>
+
+        <h4 id="#reference-cardinality">Reference cardinality</h4>
+        <p>
+          The main difference between <i>Everit Component Model</i> and <a
+            href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a> is how
+          they handle the cardinality of references.
+        </p>
+        <p>
+          During the usage of <a href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative
+            Services</a>, the programmer can define zero or one OSGi filters to pick up one or more OSGi
+          services.
+        </p>
+        <p>
+          In <i>Everit Component Model</i> the programmer can define zero or more <a
+            href="#requirement-config-filter">OSGi filter</a> or <a
+            href="#requirement-config-clause">clause</a>. The reference will have as many
+          requirement, as many entries are defined in the configuration. One requirement must wire
+          to exactly one capability.
+        </p>
+        <p>
+          Just like <a href="#attribute-cardinality">attribute cardinality</a>, reference
+          cardinality can be specified with <i>optional</i> and <i>multiple</i> properties.
+        </p>
         <h4 id="requirement-service-reference">Service reference</h4>
         Like <a href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a>, <i>Everit
           Component Model</i> supports OSGi Service references, too. A <i>service reference</i> can have
         a <a href="#setter-method">setter method</a> with two different types:
         <ul>
-          <li>The type of the OSGi service that is required</li>
-          <li>A parameter with <i>ServiceHolder</i> type. This parameter can be used to
-            retrieve additional information about the reference and the OSGi service, too:
+          <li><p>The type of the OSGi service that is required</p> <pre
+              class="prettyprint lang-java">
+public void setOtherService(OtherService otherService) {
+  this.otherService = otherService;
+}</pre></li>
+          <li>An OSGi service type array if the reference cardinality is multiple</li>
+          <li><p>
+              A parameter with <i>ServiceHolder</i> type. This type can be used to retrieve
+              additional information about the reference.
+            </p> <pre class="prettyprint lang-java">
+public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
+  // Get the reference id
+  String referenceId = holder.getReferenceId();
+
+  // Get the OSGi service reference to analyze its service properties
+  ServiceReference&lt;OtherService&gt; serviceReference = holder.getReference();
+
+  // Get the instance to call its functions or assign it to a member variable
+  OtherService serviceInstance = holder.getService();
+
+  // Get the attributes defined in the clause of the requirement
+  Map&lt;String, Object&gt; attributes = holder.getAttributes();
+  
+  ...
+}</pre></li>
+          <li>A <i>ServiceHolder&lt;ServiceType&gt;</i> array if the reference cardinality is
+            multiple
           </li>
         </ul>
         <h4 id="requirement-bundle-capability">Bundle-Capability reference</h4>
-        the references of the components differently.
+        <p>
+          <i>ECM components</i> can not only wire to OSGi services but also to <a
+            href="http://wiki.osgi.org/wiki/Provide-Capability">Bundle capabilities</a>. A
+          Bundle-Capability reference requirement becomes satisfied if there is a Bundle with a
+          capability in the OSGi container that is in the necessary state, the attributes of the
+          capability match the the filter of the requirement and the namespace of the capability
+          matches the namespace of the reference.
+        </p>
+        <p>The setter of a Bundle-Capability reference can accept one of the following types as
+          a parameter:</p>
+        <ul>
+          <li><a
+            href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/wiring/BundleCapability.html">BundleCapability</a></li>
+          <li><a
+            href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/wiring/BundleCapability.html">BundleCapability</a>
+            array if the cardinality of the reference is multiple</li>
+          <li><i>BundleCapabilityHolder</i>, that can be used to retrieve the attributes of the
+            requirement clause and the id of the requirement</li>
+          <li><i>BundleCapabilityHolder</i> array if the cardinality of the reference is
+            multiple</li>
+        </ul>
         <h3>Component capabilities</h3>
         <h4>Service capability</h4>
         <p>Manual and automatic...</p>
