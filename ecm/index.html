@@ -190,7 +190,11 @@ public class MyActivator {
       <div class="bs-docs-featurette ecm-chapter" id="specification">
         <h2 class="bs-docs-featurette-title ">Specification</h2>
         <h3 id="component-metadata">Component metadata</h3>
-        <p>A component is described by its metadata. The metadata</p>
+        <p>
+          A component is described by its metadata. The metadata is passed to the <a href="#component-container">component
+            container</a> during its instantiation. The <i>metadata</i> contains all information about configurability, the
+          attributes and the requirements of the component.
+        </p>
         <h3 id="component-container">Component container</h3>
         <p>
           A <i>Component Container</i> is responsible for the instantiation and lifecycle of <a href="component-context">Component
@@ -420,7 +424,7 @@ public class MyActivator {
                 <li>the <a href="#component-context">component context</a> during validating the configuration of
                   the component.
                 </li>
-                <li>any of the <a href="#method-method">setter methods</a> of the <i>component instance</i>.
+                <li>any of the <a href="#setter-method">setter methods</a> of the <i>component instance</i>.
                 </li>
                 <li>the <a href="#activate-method">activate method</a> of the <i>component instance.</i></li>
                 <li>the <a href="#update-method">update method</a> of the <i>component instance.</i></li>
@@ -922,11 +926,58 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           </p>
 
           <h3 id="component-methods">Component methods</h3>
-          <h4>Setters</h4>
+          <h4 id="setter-method">Setters</h4>
+          <p>
+            Every <a href="#component-attribute">attribute</a> and every <a href="#component-reference">reference</a>
+            can have <i>setter</i> method. If an <a href="#component-attribute">attribute</a> or a <a
+              href="#component-reference">reference</a> has <i>multiple</i> cardinality, the setter parameter must be an
+            array.
           <h4 id="activate-method">Activate method</h4>
+          <p>
+            The activate method of the component instance is called by the <a href="#component-context">component
+              context</a> during the <a href="#state-starting">starting process</a> of the component. The activate method
+            can have the following type of arguments:
+          </p>
+          <ul>
+            <li><a href="#">ComponentContext</a> that can be used to retrieve all information about the component:
+              configuration, metadata, state, ...</li>
+            <li><a href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/BundleContext.html">BundleContext</a></li>
+          </ul>
+          <p>
+            If the <a href="#component-metadata">component metadata</a> does not define the arguments of the activate
+            method, it will be searched with the following priority:
+          </p>
+          <ol>
+            <li>a method with a ComponentContext parameter</li>
+            <li>a method with a BundleContext parameter</li>
+            <li>a method with a Map parameter</li>
+            <li>a method that contains one or more of the following parameters: ComponentContext, BundleContext,
+              Map</li>
+            <li>a method without any parameter</li>
+          </ol>
+
           <h4 id="update-method">Update method</h4>
+          <p>
+            The <a href="#component-context">component context</a> calls the <i>update method</i> of the component
+            instance in the end of the <a href="#state-dynamic-update">dynamic update</a> process. The method does not
+            take any parameters.
+          </p>
           <h4 id="deactivate-method">Deactivate method</h4>
+          <p>
+            The <a href="#component-context">component context</a> calls the <i>deactivate method</i> during <a
+              href="#state-stopping">stopping</a> the component. The method takes no parameters.
+          </p>
           <h3>Metatype support</h3>
+          <p>
+            Every <a href="#component-container">component container</a> registers itself as an OSGi service with the <a
+              href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+            interface if the <i>metatype</i> property of the <a href="#component-metadata">compoenent metadata</a> is
+            set to <i>true</i>. It is also possible to set the metatype support for each <a href="#component-attribute">attribute</a>
+            and <a href="#component-reference">reference</a> separately.
+          </p>
+          <p>The component, the attributes and the references can have label and description. When the label or
+            description begins with "%" character, it behaves as a key that should be looked up in the file that belongs
+            to the component.</p>
         </div>
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="modules">
