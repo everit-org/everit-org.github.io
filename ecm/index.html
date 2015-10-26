@@ -199,11 +199,176 @@ public class MyActivator {
         <h2 class="bs-docs-featurette-title ">Specification</h2>
         <h3 id="component-metadata">Component metadata</h3>
         <p>
-          A component is described by its metadata. The metadata is passed to the <a
-            href="#component-container">component container</a> during its instantiation. The <i>metadata</i>
-          contains all information about configurability, the attributes and the requirements of the
-          component.
+          A component is described by its <a
+            href="http://www.everit.org/ecm-metadata/apidocs/index.html">metadata</a>. The metadata
+          is passed to the <a href="#component-container">component container</a> during its
+          instantiation. The <i>metadata</i> contains all information about configurability, the
+          attributes and the requirements of the component.
         </p>
+        <p>The programmer can specify the following settings for a component:</p>
+        <div class="responsive-table">
+          <div class="row hidden-xs">
+            <div class="col-sm-5 col-md-4 col-lg-3">
+              <b>Setting</b>
+            </div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              <b>Description</b>
+            </div>
+          </div>
+          <hr class="double-hr hidden-xs" />
+          <div class="empty-separator visible-xs">&nbsp;</div>
+          <div id="component-id" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Id</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The id of the component. If not defined, the id of the component will be the fully
+              qualified name of the <a href="#component-class">component class</a>.
+            </div>
+          </div>
+          <hr />
+          <div id="component-class" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Class</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The type that the component metadata belongs to. The specified type will be
+              instantiated by the <a href="#component-context">component context</a> when all
+              references become satisfied.
+            </div>
+          </div>
+          <hr />
+          <div id="configuration-policy" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Configuration Policy</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              <p>Can have one of the following values:</p>
+              <ul>
+                <li><p>
+                    <strong id="policy-ignore">IGNORE</strong>: Neither ManagedService nor
+                    ManagedServieFactory interface is used when the ComponentContainer OSGi service
+                    is registered. The container instantiates and opens the <a
+                      href="#component-context">Component Context</a> as soon as the container is
+                    opened and all references of the component are satisfied.
+                  </p></li>
+                <li><p>
+                    <strong id="policy-optional">OPTIONAL</strong>: One <a href="#component-context">Component
+                      Context</a> will be instantiated and opened as soon as the <i>Container</i> is
+                    started. In case a configuration is available, the Component Context will be
+                    upgraded. <strong><span class="text-danger">Although this is the
+                        default policy for components, we do not recommend using it. Strange
+                        behavior can happen. E.g.: A component is created while starting the
+                        framework than it is re-activated (and all dependent components are
+                        re-activated recursively) when Configuration Admin starts.</span></strong>
+                  </p></li>
+                <li><p>
+                    <strong id="policy-required">REQUIRED</strong>: The <a href="#component-context">Component
+                      Context</a> will be instantiated and opened only if a configuration is available.
+                    If the configuration is not available anymore, the <i>Container</i> closes the <a
+                      href="#component-context">Component Context</a>.
+                  </p></li>
+                <li><p>
+                    <strong id="policy-factory">FACTORY</strong>: The <i>Container</i> will
+                    instantiate and open as many <a href="#component-context">Component Contexts</a>
+                    as many configuration is available.
+                  </p></li>
+              </ul>
+            </div>
+          </div>
+          <hr />
+          <div id="configuration-pid" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Configuration PID</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              <p>
+                If the <a href="#configuration-policy">configuration policy</a> of the component is
+                <a href="#policy-optional">OPTIONAL</a> or <a href="#policy-required">REQUIRED</a>,
+                configurations with the same Persistent-Id can be attached to the component.
+              </p>
+              <p>
+                If the <a href="#configuration-policy">configuration policy</a> of the component is
+                <a href="#policy-factory">FACTORY</a>, configuration sets with the same Factory PID
+                can be attached to the component.
+              </p>
+              <p>
+                By default, this setting has the same value as the <a href="component-id">component
+                  id</a>.
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div id="component-metadata-attribute" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Attributes</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              Specifies the <a href="#component-attribute">attributes</a> of the component.
+            </div>
+          </div>
+          <hr />
+          <div id="component-metadata-reference" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">References</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              Specifies the <a href="#component-reference">references</a> of the component.
+            </div>
+          </div>
+          <hr />
+          <div id="component-metadata-service" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Service</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              List of types that should be used to register the component instance as an OSGi
+              service with. If no type is specified, the <a href="#component-context">component
+                context</a> will not install the component instance as an OSGi service.
+            </div>
+          </div>
+          <hr />
+          <div id="component-metadata-manual-service" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Manual service</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              List of types that are used to programmatically register OSGi services via the <a
+                href="http://www.everit.org/ecm-component-api/apidocs/org/everit/osgi/ecm/component/ComponentContext.html">component
+                context</a> of the component. This setting has informational purposes for tools that can
+              give tips which components could satisfy an unsatisfied component.
+            </div>
+          </div>
+          <hr />
+          <div id="component-metadata-activate" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Activate method</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The descriptor of the <a href="#activate-method">activate method</a> of the component.
+            </div>
+          </div>
+          <hr />
+          <div id="component-metadata-update" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Update method</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The descriptor of the <a href="#update-method">update method</a> of the component.
+            </div>
+          </div>
+          <hr />
+          <div id="component-metadata-deactivate" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Deactivate method</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The descriptor of the <a href="#activate-method">deactivate method</a> of the component.
+            </div>
+          </div>
+          <hr />
+          <div id="component-XXX" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Metatype</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">If <i>true</i>, the <a href="http://www.everit.org/ecm-component-api/apidocs/org/everit/osgi/ecm/component/resource/ComponentContainer.html"></a></div>
+          </div>
+          <hr />
+          <div id="component-XXX" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">MySetting</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">MyDescription</div>
+          </div>
+          <hr />
+          <div id="component-XXX" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">MySetting</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">MyDescription</div>
+          </div>
+          <hr />
+          <div id="component-XXX" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">MySetting</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">MyDescription</div>
+          </div>
+          <hr />
+        </div>
+
+
+
         <h3 id="component-container">Component container</h3>
         <p>
           A <i>Component Container</i> is responsible for the instantiation and lifecycle of <a
@@ -223,7 +388,10 @@ public class MyActivator {
           <div class="empty-separator visible-xs">&nbsp;</div>
           <div class="row">
             <div class="col-sm-3 col-lg-6">
-              <span class="hidden-xs hidden-sm hidden-md">org.everit.osgi.ecm.component.resource.</span>ComponentContainer
+              <a
+                href="http://www.everit.org/ecm-component-api/apidocs/org/everit/osgi/ecm/component/resource/ComponentContainer.html">
+                <span class="hidden-xs hidden-sm hidden-md">org.everit.osgi.ecm.component.resource.</span>ComponentContainer
+              </a>
             </div>
             <div class="col-sm-9 col-lg-6">
               Used to retrieve all information about the state of the container instance.
@@ -272,37 +440,9 @@ public class MyActivator {
           is registered with <i>ManagedService</i> or <i>ManagedServiceFactory</i> interface. <i>Configuration
             Admin</i> notifies the <i>Component Container</i> by calling the OSGi service if a new
           configuration is available, a configuration was modified or a configuration was deleted.
-          The behavior of the Component Container depends on the configuration policy:
+          The behavior of the Component Container depends on the <a
+            href="#component-configuration-policy">configuration policy</a>.
         </p>
-        <ul>
-          <li><p>
-              <strong id="policy-ignore">IGNORE</strong>: Neither ManagedService nor
-              ManagedServieFactory interface is used when the ComponentContainer OSGi service is
-              registered. The container instantiates and opens the <a href="#component-context">Component
-                Context</a> as soon as the container is opened and all references of the component are
-              satisfied.
-            </p></li>
-          <li><p>
-              <strong id="policy-optional">OPTIONAL</strong>: One <a href="#component-context">Component
-                Context</a> will be instantiated and opened as soon as the <i>Container</i> is started.
-              In case a configuration is available, the Component Context will be upgraded. <strong><span
-                class="text-danger">Although this is the default policy for components, we do
-                  not recommend using it. Strange behavior can happen. E.g.: A component is created
-                  while starting the framework than it is re-activated (and all dependent components
-                  are re-activated recursively) when Configuration Admin starts.</span></strong>
-            </p></li>
-          <li><p>
-              <strong id="policy-required">REQUIRED</strong>: The <a href="#component-context">Component
-                Context</a> will be instantiated and opened only if a configuration is available. If the
-              configuration is not available anymore, the <i>Container</i> closes the <a
-                href="#component-context">Component Context</a>.
-            </p></li>
-          <li><p>
-              <strong id="policy-factory">FACTORY</strong>: The <i>Container</i> will instantiate
-              and open as many <a href="#component-context">Component Contexts</a> as many
-              configuration is available.
-            </p></li>
-        </ul>
         <div class="clearfix">
           <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-0 text-center"
             style="padding-bottom: 1em;">
@@ -357,7 +497,7 @@ public class MyActivator {
             <div class="col-sm-5 col-md-4 col-lg-3">
               <b>State</b>
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-7 col-md-8 col-lg-9">
               <b>Description</b>
             </div>
           </div>
@@ -770,43 +910,300 @@ public class MyActivator {
           </div>
 
           <h3 id="component-attributes">Component attributes</h3>
-          <h4>Attribute types</h4>
-          <p>
-            An attribute always has one of the following types: <i>boolean, byte, char, double,
-              float, int, long, password, short, String</i>.
-          </p>
-          <h4>Attribute cardinality</h4>
-          <p>
-            An attribute might be optional or required. In case of optional, the attribute value
-            might be <i>undefined</i>. In case the attribute is not defined, its <i>setter</i> will
-            not be called.
-          </p>
-          <p>
-            An attribute has a "<i>multiple</i>" flag. If the "<i>multiple</i>" flag is <i>true</i>,
-            the attribute can have more than one values. If a <i>setter</i> method is defined for a
-            <i>multiple=true</i> attribute, the parameter of the setter must be the array of the
-            attribute type. E.g.: int[], String[], ...
-          </p>
-          <h4>Dynamic attribute</h4>
-          <p>Every time the value of the attribute changes (most likely via Configuration Admin)
-            the following will happen:</p>
+          <h4 id="attribute-type">Attribute types</h4>
+          <p>The following types are supported by ECM:</p>
           <ul>
-            <li>if the attribute is <i>non-dynamic</i>, the component will be restarted.
-            </li>
-            <li>if the attribute is <i>dynamic</i>, the <i>setter</i> method of the component
-              (if there is any) will be called and the if the <a href="update-method">update
-                method</a> is defined, it will be called as well.
+            <li><i>boolean</i></li>
+            <li><i>byte</i></li>
+            <li><i>char</i></li>
+            <li><i>double</i></li>
+            <li><i>float</i></li>
+            <li><i>int</i></li>
+            <li><i>long</i></li>
+            <li><i>Password</i></li>
+            <li><i>short</i></li>
+            <li><i>String</i></li>
           </ul>
-
+          <h4>Attribute settings</h4>
+          <div class="responsive-table">
+            <div class="row hidden-xs">
+              <div class="col-sm-5 col-md-4 col-lg-3">
+                <b>Setting</b>
+              </div>
+              <div class="col-sm-7">
+                <b>Description</b>
+              </div>
+            </div>
+            <hr class="double-hr hidden-xs" />
+            <div class="empty-separator visible-xs">&nbsp;</div>
+            <div id="attribute-id" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Id</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                The id of the attribute that must be unique within the component. When a
+                configuration is attached to the <a href="#component-context">component context</a>,
+                the keys in the configuration properties should match with the id of the component
+                attribute.
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-metatype" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Metatype</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                A <i>boolean</i> setting that indicates whether this attribute should be available
+                via the <a
+                  href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                OSGi service or not.
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-label" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Label</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>
+                  Human readable format of the <a href="#attribute-id">attribute id</a>. The label
+                  is accessible via the <a
+                    href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                  OSGi service that is registered together with the <a href="#component-container">component
+                    container</a>.
+                </p>
+                <p>
+                  If the label starts with the '<i>%</i>' character, the actual value is read from
+                  the resource bundle that is attached to the component. If the resource bundle does
+                  not contain the entry with the specific key, the value without the '<i>%</i>'
+                  character is returned by the <a
+                    href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                  OSGi service.
+                </p>
+                <p>
+                  The default value of the label attribute setting is the concatenation of a '<i>%</i>'
+                  character, the <a href="#attribute-id">attribute id</a> and the String "<i>.name</i>".
+                  E.g.: If the attribute id is "<i>myAttribute</i>", the default value of the label
+                  will be "<i>%myAttribute.name</i>"
+                </p>
+                <p>
+                  This setting is ignored if the value of the <a href="#attribute-metatype">metatype</a>
+                  setting is false.
+                </p>
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-description" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Description</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>
+                  The description of the component attribute. The description is accessible via the
+                  <a
+                    href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                  OSGi service that is registered together with the <a href="#component-container">component
+                    container</a>.
+                </p>
+                <p>
+                  If the description starts with the '<i>%</i>' character, the actual value is read
+                  from the resource bundle that is attached to the component. If the resource bundle
+                  does not contain the entry with the specific key, the value without the '<i>%</i>'
+                  character is returned by the <a
+                    href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                  OSGi service.
+                </p>
+                <p>
+                  The default value of the label attribute setting is the concatenation of a '<i>%</i>'
+                  character, the <a href="#attribute-id">attribute id</a> and the String "<i>.description</i>".
+                  E.g.: If the attribute id is "<i>myAttribute</i>", the default value of the
+                  description will be "<i>%myAttribute.description</i>"
+                </p>
+                <p>
+                  This setting is ignored if the value of the <a href="#attribute-metatype">metatype</a>
+                  setting is false.
+                </p>
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-default-value" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Default value</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>
+                  An attribute can have a default value that is applied when the configuration does
+                  not contain any entry with the same key as the id of the attribute. The programmer
+                  can specify the default value as an array of the <a href="#attribute-type">attribute
+                    type</a>. The meaning of an empty array is
+                </p>
+                <ul>
+                  <li><i>undefined</i> if the value of the <a href="#attribute-multiple">multiple</a>
+                    setting is <i>false</i>.</li>
+                  <li><i>an empty array</i> if the value of the <a href="#attribute-multiple">multiple</a>
+                    setting is <i>true</i>.</li>
+                </ul>
+                <p>
+                  The default value cannot be a multi-element array if the value of the <a
+                    href="#attribute-multiple">multiple</a> setting is <i>false</i>.
+                </li>
+                </p>
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-optional" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Optional</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>
+                  If the value of the optional setting is <i>true</i>, it is not necessary to define
+                  its value.
+                </p>
+                <p>
+                  The <a href="#attribute-setter">setter method</a> of an undefined attribute is not
+                  called before the <a href="#activate-method">activate method</a>.
+                </p>
+                <p>
+                  If the attribute is <a href="#attribute-dynamic">dynamic</a>, and its value is
+                  changed to <i>undefined</i> together with only other <i>dynamic</i> attributes and
+                  references, the <a href="#attribute-setter">setter method</a> of the attribute
+                  will be called with <i>null</i> value. The <a href="#attribute-setter">setter
+                    method</a> of <a href="#attribute-dynamic">dynamic</a> attributes should always have
+                  the class representation of primitive types as the parameter.
+                </p>
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-multiple" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Multiple</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                Attributes with <i>multiple</i> flag can get arrays as configuration values.
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-dynamic" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Dynamic</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>
+                  Every time the value of the attribute of an <a href="#state-active">ACTIVE</a>
+                  component changes (most likely via Configuration Admin) the following will happen:
+                </p>
+                <ul>
+                  <li>if the attribute is <i>non-dynamic</i>, the component will be restarted.
+                  </li>
+                  <li>if the attribute is <i>dynamic</i>, the <i>setter</i> method of the
+                    component (if there is any) will be called before <a href="update-method">update
+                      method</a>.
+                </ul>
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-options" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Options</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>
+                  Label-Value pairs that are accessible from the <a
+                    href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                  OSGi service.
+                </p>
+                <p>
+                  Just like the <a href="#attribute-label">label</a> of the attribute, the label of
+                  an option comes from the resource bundle of the component if the label is
+                  prepended with the '<i>%</i>' character.
+                </p>
+              </div>
+            </div>
+            <hr />
+            <div id="attribute-setter" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Setter</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>A component can get the value of an attribute</p>
+                <ul>
+                  <li>from the <a href="#component-context">component context</a>.
+                  </li>
+                  <li>by implementing a setter method for the attribute.</li>
+                </ul>
+                <p>The setter method is called</p>
+                <ul>
+                  <li>while <a href="#state-starting">starting the component</a> before the <a
+                    href="#activate-method">activate method</a>.
+                  </li>
+                  <li>during a <a href="#state-dynamic-update">dynamic update</a> before the <a
+                    href="#update-method">update method</a>.
+                  </li>
+                </ul>
+                <p>The type of the parameter of the setter method can be</p>
+                <ul>
+                  <li>the type of the attribute.</li>
+                  <li>the class representation of the attribute type if the attribute type is
+                    primitive.</li>
+                  <li>an array of the type of the attribute.</li>
+                  <li>an array of the class representation of the attribute type if the
+                    attribute type is primitive.</li>
+                </ul>
+              </div>
+            </div>
+            <hr />
+            <div id="state-inactive" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Priority</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                The attributes are served from the provided <a
+                  href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                in the order of their priority. The type of the priority setting is <i>float</i>.
+                The default priority is <i>1000</i>. A smaller number means higher priority. The
+                attributes with higher priority will be rendered first on the configuration screen.
+              </div>
+            </div>
+          </div>
           <h3 id="component-references">Component references</h3>
           <div class="text-center">
             <img alt="Component, Reference, Requirement, Capability relationship"
               src="component-references.svg" class="block-image" />
           </div>
+          <p>Components can have zero or more references. The programmer can specify references
+            with the following settings:</p>
+          <div id="reference-settings" class="responsive-table">
+            <div class="row hidden-xs">
+              <div class="col-sm-5 col-md-4 col-lg-3">
+                <b>Setting</b>
+              </div>
+              <div class="col-sm-7">
+                <b>Description</b>
+              </div>
+            </div>
+            <hr class="double-hr hidden-xs" />
+            <div class="empty-separator visible-xs">&nbsp;</div>
+            <div class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Attribute settings</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                Every setting that an <a href="#attribute-settings">attribute can have</a>.
+              </div>
+            </div>
+            <hr />
+            <div id="reference-setting-id" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Reference id</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>
+                  The id of the reference. If the <a href="#attribute-id">attribute id</a> is not
+                  specified, it will be a concatenation of <i>reference id</i> and the <a
+                    href="#reference-setting-configuration-type">configuration type</a>. E.g:
+                </p>
+                <ul>
+                  <li>if the <i>reference id</i> is "<i>myReference</i>", the <a
+                    href="#reference-setting-configuration-type">configuration type</a> is <i>filter</i>
+                    and the <a href="#attribute-id">attribute id</a> is not specified directly, it
+                    will get the "<i>myReference.filter</i>" value.
+                  </li>
+                  <li>if the <i>reference id</i> is "<i>myReference</i>", the <a
+                    href="#reference-setting-configuration-type">configuration type</a> is <i>clause</i>
+                    and the <a href="#attribute-id">attribute id</a> is not specified directly, it
+                    will get the "<i>myReference.clause</i>" value.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <hr />
+            <div id="reference-setting-configuration-type" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Configuration type</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                The configuration type of the reference can be either <a
+                  href="#reference-config-filter">filter</a> or <a href="#reference-config-clause">clause</a>.
+              </div>
+            </div>
+          </div>
+
           <p>
-            Components can have zero or more references. References can have zero or more
-            requirements, based on the <a href="#reference-cardinality">cardinality of the
-              reference</a>.
+            References can have zero or more requirements, based on the <a
+              href="#reference-cardinality">cardinality of the reference</a>.
           </p>
           <p>
             The <a href="#component-context">component context</a> <a href="#state-starting">starts</a>
@@ -829,7 +1226,15 @@ public class MyActivator {
             requirements: <a href="#requirement-service-reference">OSGi service requirements</a> and
             <a href="#requirement-bundle-capability">Bundle-Capability requirements</a>.
           </p>
-          <h4>Configuration modes</h4>
+          <h4>Configuration type</h4>
+          <p>
+            References have <a href="#component-attribute">attribute</a> behavior. All settings that
+            can be applied to an <a href="#component-attribute">attribute</a>, can be applied to a
+            reference, too. A reference can also have an <a href="#attribute-id">attribute id</a>
+            and the reference can be configured via the <i>Configuration Admin</i>. The type of the
+            reference attribute is <i>String</i>, but based on the settings of the reference, it can
+            have different meanings.
+          </p>
           <h5 id="requirement-config-filter">Filter expression</h5>
           <p>
             Like in <a href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative
@@ -877,7 +1282,7 @@ servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_
               href="https://github.com/everit-org/jetty-server-ecm">Everit Jetty ServletContext
               Component</a>. The component uses the <i>requirement id</i> as servlet name. In the
             example, two servlets are pulled. They will be accessible on the path that is defined
-            with the <i>url-pattern</i> attribute of the claues.
+            with the <i>url-pattern</i> attribute of the clasues.
           </p>
 
           <h4 id="#reference-cardinality">Reference cardinality</h4>
@@ -902,10 +1307,45 @@ servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_
             Just like <a href="#attribute-cardinality">attribute cardinality</a>, reference
             cardinality can be specified with <i>optional</i> and <i>multiple</i> properties.
           </p>
+
+
           <h4 id="requirement-service-reference">Service reference</h4>
+
           Like <a href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a>, <i>Everit
-            Component Model</i> supports OSGi Service references, too. A <i>service reference</i> can
-          have a <a href="#setter-method">setter method</a> with two different types:
+            Component Model</i> supports OSGi Service references, too. The programmer can specify the
+          following settings for service references:
+          </p>
+          <div class="responsive-table">
+            <div class="row hidden-xs">
+              <div class="col-sm-5 col-md-4 col-lg-3">
+                <b>Setting</b>
+              </div>
+              <div class="col-sm-7">
+                <b>Description</b>
+              </div>
+            </div>
+            <hr class="double-hr hidden-xs" />
+            <div class="empty-separator visible-xs">&nbsp;</div>
+            <div class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Reference settings</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                Every setting that an <a href="#referece-settings">reference can have</a>.
+              </div>
+            </div>
+            <hr />
+            <div id="service-reference-interface" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Service interface</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>The type of OSGi services that can satisfy the requirements of this
+                  reference. As ECM does not use any magic (proxies and bytecode manipulation), the
+                  programmer can also specify a class type here.</p>
+              </div>
+            </div>
+            <hr />
+          </div>
+          <p>
+            A <i>service reference</i> can have a <a href="#setter-method">setter method</a> with
+            two different types:
           <ul>
             <li><p>The type of the OSGi service that is required</p> <pre
                 class="prettyprint lang-java">
@@ -939,12 +1379,58 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           <h4 id="requirement-bundle-capability">Bundle-Capability reference</h4>
           <p>
             <i>ECM components</i> can not only wire to OSGi services but also to <a
-              href="http://wiki.osgi.org/wiki/Provide-Capability">Bundle capabilities</a>. A
-            Bundle-Capability reference requirement becomes satisfied if there is a Bundle with a
-            capability in the OSGi container that is in the necessary state, the attributes of the
-            capability match the the filter of the requirement and the namespace of the capability
-            matches the namespace of the reference.
+              href="http://wiki.osgi.org/wiki/Provide-Capability">Bundle capabilities</a>. A Bundle
+            reference can have the following settings:
           </p>
+          <div class="responsive-table">
+            <div class="row hidden-xs">
+              <div class="col-sm-5 col-md-4 col-lg-3">
+                <b>Setting</b>
+              </div>
+              <div class="col-sm-7">
+                <b>Description</b>
+              </div>
+            </div>
+            <hr class="double-hr hidden-xs" />
+            <div class="empty-separator visible-xs">&nbsp;</div>
+            <div class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Reference settings</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                Every setting that an <a href="#referece-settings">reference can have</a>.
+              </div>
+            </div>
+            <hr />
+            <div id="bc-reference-namespace" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">Namespace</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                <p>The namespace of the bundle capability that can satisfy the requirements of
+                  this reference.</p>
+              </div>
+            </div>
+            <hr />
+            <div id="bc-reference-statemask" class="row">
+              <div class="col-sm-5 col-md-4 col-lg-3">State mask</div>
+              <div class="col-sm-7 col-md-8 col-lg-9">
+                The <a
+                  href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/Bundle.html#getState()">states</a>
+                that bundles can have that satisfy the requirements of this reference. Only the
+                following states can be listed for this setting: <a
+                  href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/Bundle.html#RESOLVED">RESOLVED</a>,
+                <a
+                  href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/Bundle.html#STARTING">STARTING</a>,
+                <a
+                  href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/Bundle.html#STOPPING">STOPPING</a>,
+                <a href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/Bundle.html#ACTIVE">ACTIVE</a>.
+                By default the <a
+                  href="https://osgi.org/javadoc/r4v43/core/org/osgi/framework/Bundle.html#ACTIVE">ACTIVE</a>
+                state is used in the <i>stateMask</i> setting.
+              </div>
+            </div>
+          </div>
+          <p>A Bundle-Capability reference requirement becomes satisfied if there is a Bundle
+            with a capability in the OSGi container that is in the necessary state, the attributes
+            of the capability match the the filter of the requirement and the namespace of the
+            capability matches the namespace of the reference.</p>
           <p>The setter of a Bundle-Capability reference can accept one of the following types
             as a parameter:</p>
           <ul>
@@ -1053,13 +1539,16 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
             service with the <a
               href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
             interface if the <i>metatype</i> property of the <a href="#component-metadata">compoenent
-              metadata</a> is set to <i>true</i>. It is also possible to set the metatype support for
-            each <a href="#component-attribute">attribute</a> and <a href="#component-reference">reference</a>
-            separately.
+              metadata</a> is set to <i>true</i>. For more information, please see the definition of <a
+              href="#component-label">label</a> and <a href="#component-description">description</a>
+            component settings!
           </p>
-          <p>The component, the attributes and the references can have label and description.
-            When the label or description begins with "%" character, it behaves as a key that should
-            be looked up in the file that belongs to the component.</p>
+          <p>
+            It is also possible to set the metatype support for each <a href="#component-attribute">attribute</a>
+            and <a href="#component-reference">reference</a> separately. For more information,
+            please see the definition of <a href="#attribute-label">label</a> and <a
+              href="#attribute-description">description</a> attribute settings!
+          </p>
         </div>
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="modules">
