@@ -209,7 +209,7 @@ public class MyActivator {
         <div class="responsive-table">
           <div class="row hidden-xs">
             <div class="col-sm-5 col-md-4 col-lg-3">
-              <b>Setting</b>
+              <b>Metadata property</b>
             </div>
             <div class="col-sm-7 col-md-8 col-lg-9">
               <b>Description</b>
@@ -327,44 +327,119 @@ public class MyActivator {
           <div id="component-metadata-activate" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">Activate method</div>
             <div class="col-sm-7 col-md-8 col-lg-9">
-              The descriptor of the <a href="#activate-method">activate method</a> of the component.
+              The <a
+                href="http://www.everit.org/ecm-util-method/apidocs/org/everit/osgi/ecm/util/method/MethodDescriptor.html">descriptor</a>
+              of the <a href="#activate-method">activate method</a> of the component.
             </div>
           </div>
           <hr />
           <div id="component-metadata-update" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">Update method</div>
             <div class="col-sm-7 col-md-8 col-lg-9">
-              The descriptor of the <a href="#update-method">update method</a> of the component.
+              The <a
+                href="http://www.everit.org/ecm-util-method/apidocs/org/everit/osgi/ecm/util/method/MethodDescriptor.html">descriptor</a>
+              of the <a href="#update-method">update method</a> of the component.
             </div>
           </div>
           <hr />
           <div id="component-metadata-deactivate" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">Deactivate method</div>
             <div class="col-sm-7 col-md-8 col-lg-9">
-              The descriptor of the <a href="#activate-method">deactivate method</a> of the component.
+              The <a
+                href="http://www.everit.org/ecm-util-method/apidocs/org/everit/osgi/ecm/util/method/MethodDescriptor.html">descriptor</a>
+              of the <a href="#dectivate-method">deactivate method</a> of the component.
             </div>
           </div>
           <hr />
-          <div id="component-XXX" class="row">
+          <div id="component-metatadata-metatype" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">Metatype</div>
-            <div class="col-sm-7 col-md-8 col-lg-9">If <i>true</i>, the <a href="http://www.everit.org/ecm-component-api/apidocs/org/everit/osgi/ecm/component/resource/ComponentContainer.html"></a></div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              If <i>true</i>, the <a href="#component-container">component container</a> OSGi
+              service is registered with the <a
+                href="https://osgi.org/javadoc/r4v42/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+              interface.
+            </div>
           </div>
           <hr />
-          <div id="component-XXX" class="row">
-            <div class="col-sm-5 col-md-4 col-lg-3">MySetting</div>
-            <div class="col-sm-7 col-md-8 col-lg-9">MyDescription</div>
+          <div id="component-localizationbase" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Localization base</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              The component and the attributes can have labels and descriptions. The programmer can
+              translate these human-readable texts to different languages. When a laben or
+              description is prepended with the '%' character, the registered <a
+                href="https://osgi.org/javadoc/r4v42/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+              service first looks for the value in the attached <a
+                href="http://docs.oracle.com/javase/6/docs/api/java/util/ResourceBundle.html">resource
+                bundle</a>. The location of the <i>resource bundle</i> is specified by the <i>localization
+                base</i> metadata setting.
+            </div>
           </div>
           <hr />
-          <div id="component-XXX" class="row">
-            <div class="col-sm-5 col-md-4 col-lg-3">MySetting</div>
-            <div class="col-sm-7 col-md-8 col-lg-9">MyDescription</div>
+          <div id="component-metadata-label" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Label</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              <p>
+                Human readable format of the <a href="#component-id">component id</a>. The label is
+                accessible via the <a
+                  href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                OSGi service that is registered together with the <a href="#component-container">component
+                  container</a> if the value of the <a href="#component-metadata-metatype">metatype</a>
+                setting is true.
+              </p>
+              <p>
+                If the label starts with the '<i>%</i>' character, the actual value is read from the
+                resource bundle that is attached to the component. If the resource bundle does not
+                contain the entry with the specific key, the value without the '<i>%</i>' character
+                is returned by the <a
+                  href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                OSGi service.
+              </p>
+              <p>
+                The default value of the label attribute setting is the concatenation of a '<i>%</i>'
+                character, the <a href="#component-id">component id</a> and the String "<i>.name</i>".
+                E.g.: If the component id is "<i>MyComponent</i>", the default value of the label
+                will be "<i>%MyComponent.name</i>"
+              </p>
+            </div>
           </div>
           <hr />
-          <div id="component-XXX" class="row">
-            <div class="col-sm-5 col-md-4 col-lg-3">MySetting</div>
-            <div class="col-sm-7 col-md-8 col-lg-9">MyDescription</div>
+          <div id="component-metadata-description" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Description</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">
+              <p>
+                The description of the component. The description is accessible via the <a
+                  href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                OSGi service that is registered together with the <a href="#component-container">component
+                  container</a> if the value of the <a href="#component-metadata-metatype">metatype</a>
+                setting is true.
+              </p>
+              <p>
+                If the description starts with the '<i>%</i>' character, the actual value is read
+                from the resource bundle that is attached to the component. If the resource bundle
+                does not contain the entry with the specific key, the value without the '<i>%</i>'
+                character is returned by the <a
+                  href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
+                OSGi service.
+              </p>
+              <p>
+                The default value of the description attribute setting is the concatenation of a '<i>%</i>'
+                character, the <a href="#component-id">component id</a> and the String "<i>.description</i>".
+                E.g.: If the component id is "<i>MyComponent</i>", the default value of the
+                description will be "<i>%MyComponent.description</i>"
+              </p>
+              <p>
+                This setting is ignored if the value of the <a href="#component-metadata-metatype">metatype</a>
+                setting is false.
+              </p>
+            </div>
           </div>
           <hr />
+          <div id="component-icons" class="row">
+            <div class="col-sm-5 col-md-4 col-lg-3">Icons</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">Location of icon files on the classpath
+              that the Webconsole or any other OSGi management tool can show next to the component
+              or its attached configuration.</div>
+          </div>
         </div>
 
 
@@ -924,11 +999,11 @@ public class MyActivator {
             <li><i>short</i></li>
             <li><i>String</i></li>
           </ul>
-          <h4>Attribute settings</h4>
+          <h4>Attribute metadata</h4>
           <div class="responsive-table">
             <div class="row hidden-xs">
               <div class="col-sm-5 col-md-4 col-lg-3">
-                <b>Setting</b>
+                <b>Metadata property</b>
               </div>
               <div class="col-sm-7">
                 <b>Description</b>
@@ -1154,7 +1229,7 @@ public class MyActivator {
           <div id="reference-settings" class="responsive-table">
             <div class="row hidden-xs">
               <div class="col-sm-5 col-md-4 col-lg-3">
-                <b>Setting</b>
+                <b>Metadata property</b>
               </div>
               <div class="col-sm-7">
                 <b>Description</b>
@@ -1318,7 +1393,7 @@ servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_
           <div class="responsive-table">
             <div class="row hidden-xs">
               <div class="col-sm-5 col-md-4 col-lg-3">
-                <b>Setting</b>
+                <b>Metadata property</b>
               </div>
               <div class="col-sm-7">
                 <b>Description</b>
@@ -1327,7 +1402,7 @@ servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_
             <hr class="double-hr hidden-xs" />
             <div class="empty-separator visible-xs">&nbsp;</div>
             <div class="row">
-              <div class="col-sm-5 col-md-4 col-lg-3">Reference settings</div>
+              <div class="col-sm-5 col-md-4 col-lg-3">Reference metadata properties</div>
               <div class="col-sm-7 col-md-8 col-lg-9">
                 Every setting that an <a href="#referece-settings">reference can have</a>.
               </div>
@@ -1385,7 +1460,7 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           <div class="responsive-table">
             <div class="row hidden-xs">
               <div class="col-sm-5 col-md-4 col-lg-3">
-                <b>Setting</b>
+                <b>Metadata property</b>
               </div>
               <div class="col-sm-7">
                 <b>Description</b>
@@ -1562,8 +1637,38 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
         <p class="text-center">
           <img src="ecm-dependency-graph.svg" style="max-width: 100%;" />
         </p>
-        <h3 id="ecm-extender-api">ECM Extender API</h3>
-        <p>Hello extender api</p>
+        <h3 id="ecm-util-method">ECM Util Method</h3>
+        <p>
+          Helper methods to generate and parse method signatures and to locate methods based on the
+          112.9.4 Locating Component Methods chapter of OSGi Compendium specification. ECM uses the
+          same algorithm to resolve <a href="#setter-method">setters</a>, <a href="activate-method">activate</a>,
+          <a href="update-method">update</a> and <a href="deactivate-method">deactivate method</a>
+          except that ECM only looks for methods with pulblic modifier.
+        </p>
+        <h3 id="ecm-metadata">ECM Metadata</h3>
+        <p>
+          Contains all <a href="#component-metadata">Metadata classes</a> that are necessary to
+          instantiate a <a href="#component-container">component container</a>.
+        <h3 id="linkage-api">Linkage API</h3>
+        <p>The API defines a set of interfaces that can describe entities and their wirings in
+          an OSGi container. Entity can be</p>
+        <ul>
+          <li>Bundles</li>
+          <li>OSGi services</li>
+          <li>ECM components</li>
+          <li>Any other entities that have wirings with other, like Declarative Services
+            Components</li>
+        </ul>
+        <p>ECM implements Linkage API by default. If other technologies implemented it, a
+          snapshot could be created about the whole architecture of a running system.</p>
+        <h3 id="ecm-component-api">Capability Collector</h3>
+        <p>Programmers should add ECM Component API to implement ECM components.</p>
+        <h3 id="ecm-component-api">Capability collector</h3>
+        <p>The API that can be used by programmers to create ECM components.</p>
+        <h3 id="ecm-component-api">ECM Component API</h3>
+        <p>The API that can be used by programmers to create ECM components.</p>
+        <h3 id="ecm-component-api">ECM Component API</h3>
+        <p>The API that can be used by programmers to create ECM components.</p>
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="webconsole-plugin">
         <h2 class="bs-docs-featurette-title ">Webconsole plugin</h2>
