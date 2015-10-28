@@ -1661,14 +1661,32 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
         </ul>
         <p>ECM implements Linkage API by default. If other technologies implemented it, a
           snapshot could be created about the whole architecture of a running system.</p>
-        <h3 id="ecm-component-api">Capability Collector</h3>
+        <h3 id="ecm-component-api">ECM Component API</h3>
         <p>Programmers should add ECM Component API to implement ECM components.</p>
-        <h3 id="ecm-component-api">Capability collector</h3>
-        <p>The API that can be used by programmers to create ECM components.</p>
-        <h3 id="ecm-component-api">ECM Component API</h3>
-        <p>The API that can be used by programmers to create ECM components.</p>
-        <h3 id="ecm-component-api">ECM Component API</h3>
-        <p>The API that can be used by programmers to create ECM components.</p>
+        <h3 id="capability-collector">Capability Collector</h3>
+        <p>
+          Capability collector is responsible for handling the lifecycle or <a
+            href="component-reference">component references</a> on the low level. Programmers can
+          use this library separately to add similar functionality to existing component models like
+          ECM has: Handling events when a set of requirements are satisfied.
+        </p>
+        <h3 id="ecm-component-ri">ECM Component RI</h3>
+        <p>The Reference implementation of Everit Component Model specification.</p>
+        <h3 id="ecm-annotation">ECM Annotation</h3>
+        <p>An annotation set that can be set instead of programmatically creating components.</p>
+        <h3 id="ecm-annotation-metadatabuilder">ECM Annotation MetadataBuilder</h3>
+        <p>
+          Util classes to create <a href="component-metadata">metadata objects</a> from a class that
+          is annotated <a href="ecm-annotation">ECM Annotaitons</a>.
+        </p>
+        <h3 id="ecm-extender-api">ECM Extender API</h3>
+        <p>Constants of ECM Extender. The programmer can use the constants to tell the ECM
+          Extender that the annotated class should be picked up.</p>
+        <h3 id="ecm-component-api">ECM Extender RI</h3>
+        <p>
+          Reference implementation of the ECM Extender API. For more information, please see the <a
+            href="usage-extender">Using the extender</a> chapter.
+        </p>
       </div>
       <div class="bs-docs-featurette ecm-chapter" id="webconsole-plugin">
         <h2 class="bs-docs-featurette-title ">Webconsole plugin</h2>
