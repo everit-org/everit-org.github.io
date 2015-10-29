@@ -71,8 +71,8 @@
   </div>
   <div class="container">
     <div class="col-md-10">
-      <div class="bs-docs-featurette ecm-chapter" id="introduction">
-        <h2 class="bs-docs-featurette-title ">Introduction</h2>
+      <div class="bs-docs-featurette ecm-chapter">
+        <h2 id="introduction" class="bs-docs-featurette-title ">Introduction</h2>
         <p>
           ECM is a <a href="http://wiki.osgi.org/wiki/Component_Models_Overview">component model</a>
           designed to work well in large OSGi based applications. Developers who have used <a
@@ -89,18 +89,18 @@
         <p>
           Instead of <a href="http://wiki.osgi.org/wiki/Whiteboard_Pattern">whiteboard pattern</a>,
           ECM supports the top-down configuration approach. While developers can wire components
-          together with whiteboard pattern rapidly, they lose the ability of systematic issue
-          detection. E.g.: When part of an application is not started, and no exception is thrown,
-          it is hard to find the missing piece. Searching the issue is even harder when one has to
-          fix an issue in an application that was written by other.
+          together with whiteboard pattern rapidly, they lose the ability of efficient issue
+          detection. E.g.: If part of an application cannot start without any meaningful exception,
+          it is hard to find the missing piece. Searching the issue is even more difficult when one
+          has to fix a problem in an application that was written by other.
         </p>
         <p>With top-down configuration design, developers can start searching the problem from
           the top of the application skeleton and by walking down on the unsatisfied component
           graph, they can find the original cause of the issue rapidly. With ECM, designing OSGi
           based applications becomes easier and more fun.</p>
       </div>
-      <div class="bs-docs-featurette ecm-chapter" id="quickstart">
-        <h2 class="bs-docs-featurette-title ">Quick start</h2>
+      <div class="bs-docs-featurette ecm-chapter">
+        <h2 id="quickstart" class="bs-docs-featurette-title ">Quick start</h2>
         <p>There are several ways to use the Everit Component Model. The easiest way is using
           OSGi extender pattern, while components can be created and started programmatically, too.</p>
         <h3 id="usage-extender">Using the Extender</h3>
@@ -119,8 +119,8 @@
             </p></li>
         </ul>
 
-        <p>In order to be picked up by the extender, the component class must be annotated in
-          the following way:</p>
+        <p>To be picked up by the extender, the component class must be annotated in the
+          following way:</p>
         <pre class="prettyprint lang-java">import org.everit.osgi.ecm.annotation.Component;
 import aQute.bnd.annotation.headers.ProvideCapability;
 
@@ -130,8 +130,8 @@ import aQute.bnd.annotation.headers.ProvideCapability;
 public class MyComponent {
 }</pre>
         <p>
-          The documentation of <a href="#ecm-annotation">ecm-annotation</a> OSGi bundle contains the
-          full list of annotations that can be used during the creation of a component class.
+          The documentation of all annotations is available in <a
+            href="http://www.everit.org/ecm-annotation/apidocs/index.html">javadoc</a>.
         </p>
         <p>
           With a build tool that uses <i>bndlib</i> inside, the necessary MANIFEST header will be
@@ -141,7 +141,7 @@ public class MyComponent {
         </p>
         <pre class="prettyprint">Provide-Capability: org.everit.osgi.ecm.component;class="mypackage.MyComponent"</pre>
         <p>By having the necessary MANIFEST header, the ECM Extender will automatically pick up
-          the specified class and look for annotations in it.</p>
+          the specified class and look for annotations.</p>
         <p>In the runtime environment, the following OSGi bundle should be installed with its
           dependencies:</p>
         <ul>
@@ -195,15 +195,14 @@ public class MyActivator {
           documentation of <a href="#ecm-metadata">ecm-metadata</a> OSGi bundle!
         </p>
       </div>
-      <div class="bs-docs-featurette ecm-chapter" id="specification">
-        <h2 class="bs-docs-featurette-title ">Specification</h2>
+      <div class="bs-docs-featurette ecm-chapter">
+        <h2 id="specification" class="bs-docs-featurette-title ">Specification</h2>
         <h3 id="component-metadata">Component metadata</h3>
         <p>
-          A component is described by its <a
-            href="http://www.everit.org/ecm-metadata/apidocs/index.html">metadata</a>. The metadata
-          is passed to the <a href="#component-container">component container</a> during its
-          instantiation. The <i>metadata</i> contains all information about configurability, the
-          attributes and the requirements of the component.
+          Its <a href="http://www.everit.org/ecm-metadata/apidocs/index.html">metadata</a> describes
+          a component. The programmer must pass the metadata to the <a href="#component-container">component
+            container</a> during its instantiation. The <i>metadata</i> contains all information about
+          configurability, the attributes and the requirements of the component.
         </p>
         <p>The programmer can specify the following settings for a component:</p>
         <div class="responsive-table">
@@ -228,9 +227,9 @@ public class MyActivator {
           <div id="component-class" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">Class</div>
             <div class="col-sm-7 col-md-8 col-lg-9">
-              The type that the component metadata belongs to. The specified type will be
-              instantiated by the <a href="#component-context">component context</a> when all
-              references become satisfied.
+              The type that the component. The specified class will be instantiated by the <a
+                href="#component-context">component context</a> when all references become
+              satisfied.
             </div>
           </div>
           <hr />
@@ -308,16 +307,18 @@ public class MyActivator {
           <div id="component-metadata-service" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">Service</div>
             <div class="col-sm-7 col-md-8 col-lg-9">
-              List of types that should be used to register the component instance as an OSGi
-              service with. If no type is specified, the <a href="#component-context">component
-                context</a> will not install the component instance as an OSGi service.
+              The <a href="#component-context">component context</a> registers the component
+              instance at the end of the <a href="#state-starting">starting process</a> as an OSGi
+              service with the specified types. If no type is specified, the <a
+                href="#component-context">component context</a> will not install the component
+              instance as an OSGi service.
             </div>
           </div>
           <hr />
           <div id="component-metadata-manual-service" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">Manual service</div>
             <div class="col-sm-7 col-md-8 col-lg-9">
-              List of types that are used to programmatically register OSGi services via the <a
+              List of types that are used to register programmatically OSGi services via the <a
                 href="http://www.everit.org/ecm-component-api/apidocs/org/everit/osgi/ecm/component/ComponentContext.html">component
                 context</a> of the component. This setting has informational purposes for tools that can
               give tips which components could satisfy an unsatisfied component.
@@ -364,8 +365,8 @@ public class MyActivator {
           <div id="component-localizationbase" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">Localization base</div>
             <div class="col-sm-7 col-md-8 col-lg-9">
-              The component and the attributes can have labels and descriptions. The programmer can
-              translate these human-readable texts to different languages. When a laben or
+              The component and the attributes can have labels and descriptions. The developer can
+              translate these human-readable texts to different languages. When a label or
               description is prepended with the '%' character, the registered <a
                 href="https://osgi.org/javadoc/r4v42/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
               service first looks for the value in the attached <a
@@ -511,10 +512,10 @@ public class MyActivator {
         </div>
         <p>
           ECM relies on the <i>Configuration Admin</i> chapter of <i>OSGi Compendium
-            specification</i>. If any configuration is necessary, <i>ComponentContainer</i> OSGi service
+            Specification</i>. If any configuration is necessary, <i>ComponentContainer</i> OSGi service
           is registered with <i>ManagedService</i> or <i>ManagedServiceFactory</i> interface. <i>Configuration
             Admin</i> notifies the <i>Component Container</i> by calling the OSGi service if a new
-          configuration is available, a configuration was modified or a configuration was deleted.
+          configuration is available; a configuration was modified, or a configuration was deleted.
           The behavior of the Component Container depends on the <a
             href="#component-configuration-policy">configuration policy</a>.
         </p>
@@ -550,8 +551,8 @@ public class MyActivator {
           <li>register OSGi services</li>
         </ul>
         <p>
-          <strong class="text-danger">OSGi services should be always registered with <i>ComponentContext</i>
-            and not via <i>BundleContext</i> directly!
+          <strong class="text-danger">Component developers should always register OSGi
+            services via <i>ComponentContext</i> and not via <i>BundleContext</i>!
           </strong> ECM can provide complete <a href="#">Component wiring</a> information only if OSGi
           services are registered via <i>ComponentContext</i>.
         </p>
@@ -619,8 +620,8 @@ public class MyActivator {
           <hr />
           <div id="state-active" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">ACTIVE</div>
-            <div class="col-sm-7 col-md-8 col-lg-9">The component is active and if defined so,
-              it is registered as an OSGi service.</div>
+            <div class="col-sm-7 col-md-8 col-lg-9">The component is active, and if defined
+              so, it is registered as an OSGi service.</div>
           </div>
           <hr />
           <div id="state-updating-configuration" class="row">
@@ -664,8 +665,8 @@ public class MyActivator {
             <div class="col-sm-7 col-md-8 col-lg-9">
               An exception was thrown by
               <ul>
-                <li>the <a href="#component-context">component context</a> during validating
-                  the configuration of the component.
+                <li>the <a href="#component-context">component context</a> while validating the
+                  configuration of the component.
                 </li>
                 <li>any of the <a href="#setter-method">setter methods</a> of the <i>component
                     instance</i>.
@@ -701,7 +702,7 @@ public class MyActivator {
             <p>
               <i>Dynamic update</i> happens when the <a href="#component-context">component
                 context</a> updates the component instance without leaving the <a href="#state-active">ACTIVE</a>
-              state. That means that <i>Dynamic update</i> is not a state that appears for the user.
+              state. That means that <i>Dynamic update</i> is not a state that appears to the user.
               If the update is successful, the process runs without changing the state of the
               component. The <i>Dynamic update</i> process executes the following steps:
             </p>
@@ -713,14 +714,14 @@ public class MyActivator {
             </ul>
           </div>
         </div>
-        <h4>State transitions</h4>
+        <h4 id="state-transitions">State transitions</h4>
         <div class="text-center" style="padding-top: 1em;">
           <img alt="Component Lifecycle Diagram" src="lifecycle.svg" style="max-width: 100%;">
         </div>
         <div class="responsive-table">
           <div class="row hidden-xs">
             <div class="col-sm-5 col-lg-4">
-              <b>State transition</b>
+              <b>Transition</b>
             </div>
             <div class="col-sm-7 col-lg-8">
               <b>Description</b>
@@ -763,7 +764,7 @@ public class MyActivator {
             </div>
             <div class="col-sm-7 col-lg-8">
               The component context calls the <a href="#state-starting">starting process</a> if all
-              <a href="#component-requirement">requirements</a> becomes satisfied.
+              <a href="#component-requirement">requirements</a> become satisfied.
             </div>
           </div>
           <hr />
@@ -776,16 +777,16 @@ public class MyActivator {
             </div>
             <div class="col-sm-7 col-lg-8">
               <p>
-                The <a href="#state-starting">starting process</a> if
+                The <a href="#state-starting">starting process</a> fails if
               </p>
               <ul>
-                <li>The instantiation of the component class throws and exception.</li>
-                <li>The type of the value of any of the attributes does not match with the
+                <li>an exception is thrown during the instantiation of the component class.</li>
+                <li>the type of the value of any of the attributes does not match with the
                   defined type of the attribute</li>
-                <li>Any of the specified <a href="#setter-method">setter methods</a> of the
+                <li>any of the specified <a href="#setter-method">setter methods</a> of the
                   component instance throws an exception.
                 </li>
-                <li>The <a href="activate-method">activate method</a> throws an exception
+                <li>the <a href="activate-method">activate method</a> throws an exception
                 </li>
               </ul>
             </div>
@@ -843,8 +844,8 @@ public class MyActivator {
                   only dynamic attributes are changed</li>
                 <li>the configuration that belongs to the component instance is updated and
                   only the configuration of dynamic requirements are changed in the way that all of
-                  the requirements is satisfied with the new configuration (e.g.: an OSGi service is
-                  unregistered but there is another one that satisfies the component)</li>
+                  the requirements are satisfied with the new configuration (e.g.: an OSGi service
+                  is unregistered but there is another one that satisfies the component)</li>
                 <li>if a capability that is wired to one of the dynamic requirement of the
                   component is replaced by another capability</li>
               </ul>
@@ -915,7 +916,7 @@ public class MyActivator {
             </div>
             <div class="col-sm-7 col-lg-8">
               <p>
-                When the <a href="#component-context">component context</a> is closed and the
+                When the <a href="#component-context">component context</a> is closed, and the
                 component is <a href="#state-active">ACTIVE</a>, the <a href="#component-context">component
                   context</a>
               </p>
@@ -935,7 +936,7 @@ public class MyActivator {
             </div>
             <div class="col-sm-7 col-lg-8">
               <p>
-                When the <a href="#component-context">component context</a> is closed and the
+                When the <a href="#component-context">component context</a> is closed, and the
                 component is <a href="#state-failed">FAILED</a>, the <a href="#component-context">component
                   context</a>
               </p>
@@ -985,7 +986,7 @@ public class MyActivator {
           </div>
 
           <h3 id="component-attributes">Component attributes</h3>
-          <h4 id="attribute-type">Attribute types</h4>
+          <h4 id="attribute-types">Attribute types</h4>
           <p>The following types are supported by ECM:</p>
           <ul>
             <li><i>boolean</i></li>
@@ -999,7 +1000,7 @@ public class MyActivator {
             <li><i>short</i></li>
             <li><i>String</i></li>
           </ul>
-          <h4>Attribute metadata</h4>
+          <h4 id="attribute-metadata">Attribute metadata</h4>
           <div class="responsive-table">
             <div class="row hidden-xs">
               <div class="col-sm-5 col-md-4 col-lg-3">
@@ -1219,13 +1220,13 @@ public class MyActivator {
               </div>
             </div>
           </div>
-          <h3 id="component-references">Component references</h3>
+          <h3 id="component-reference">Component references</h3>
           <div class="text-center">
             <img alt="Component, Reference, Requirement, Capability relationship"
               src="component-references.svg" class="block-image" />
           </div>
-          <p>Components can have zero or more references. The programmer can specify references
-            with the following settings:</p>
+          <p>Components can have zero or more references.</p>
+          <h4 id="reference-metadata">Reference metadata</h4>
           <div id="reference-settings" class="responsive-table">
             <div class="row hidden-xs">
               <div class="col-sm-5 col-md-4 col-lg-3">
@@ -1299,9 +1300,9 @@ public class MyActivator {
             While <a href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a>
             supports only one kind of reference, <i>Everit Component Model</i> supports two type of
             requirements: <a href="#requirement-service-reference">OSGi service requirements</a> and
-            <a href="#requirement-bundle-capability">Bundle-Capability requirements</a>.
+            <a href="#reference-bundle-capability">Bundle-Capability requirements</a>.
           </p>
-          <h4>Configuration type</h4>
+          <h4 id="reference-config-type">Configuration type</h4>
           <p>
             References have <a href="#component-attribute">attribute</a> behavior. All settings that
             can be applied to an <a href="#component-attribute">attribute</a>, can be applied to a
@@ -1318,7 +1319,7 @@ public class MyActivator {
           </p>
           <pre>myReference.target = (service.pid=MyDataSource_XXXX-XXXX-XXXX-XXX)</pre>
           <p>If no filter is defined, every capability with the same namespace will match the
-            requiement. The filter expression can filter based on the attributes of the capability.</p>
+            requirement. The filter expression can filter based on the attributes of the capability.</p>
           <p>
             In case the reference configuration is <i>OSGi filter</i> based, each requirement will
             be created with the following definition:
@@ -1341,13 +1342,13 @@ public class MyActivator {
           <ul>
             <li><strong>Requirement Id:</strong> The clause starts with the id of the
               requirement. Requirement id must be unique within the scope of the reference.</li>
-            <li><strong>Attributes:</strong> The clause can contain yero or more attributes
-              separated by semicolon. The attribute is built up from a key-value pair where the key
-              is separated with an equality (=) character from the value.</li>
+            <li><strong>Attributes:</strong> The clause can contain zero or more attributes
+              separated by a semicolon. The attribute is built up from a key-value pair where the
+              key is separated with an equality (=) character from the value.</li>
             <li><strong>Filter directive:</strong> A filter can be optionally defined. If no
-              filter is defined, every capability with the same namespace will match the requiement.
-              The filter expression can filter based on the attributes of the capability. Directives
-              use (:=) as key-value separator.</li>
+              filter is set, every capability with the same namespace will match the requiement. The
+              filter expression can filter based on the attributes of the capability. Directives use
+              (:=) as a key-value separator.</li>
           </ul>
           <pre>
 servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_XXXX_XXXX_XXXX_XXXX)",
@@ -1360,7 +1361,7 @@ servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_
             with the <i>url-pattern</i> attribute of the clasues.
           </p>
 
-          <h4 id="#reference-cardinality">Reference cardinality</h4>
+          <h4 id="reference-cardinality">Reference cardinality</h4>
           <p>
             The main difference between <i>Everit Component Model</i> and <a
               href="http://wiki.osgi.org/wiki/Declarative_Services">Declarative Services</a> is how
@@ -1372,11 +1373,11 @@ servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_
             OSGi services.
           </p>
           <p>
-            In <i>Everit Component Model</i> the programmer can define zero or more <a
+            In <i>Everit Component Model</i>, the developer can specify zero or more <a
               href="#requirement-config-filter">OSGi filter</a> or <a
               href="#requirement-config-clause">clause</a>. The reference will have as many
-            requirement, as many entries are defined in the configuration. One requirement must wire
-            to exactly one capability.
+            requirement, as many entries are set in the configuration. One requirement must wire to
+            exactly one capability.
           </p>
           <p>
             Just like <a href="#attribute-cardinality">attribute cardinality</a>, reference
@@ -1420,7 +1421,7 @@ servlets.clause = [ "app;url-pattern=/myApp/*;filter:=(service.pid=MyAppServlet_
           </div>
           <p>
             A <i>service reference</i> can have a <a href="#setter-method">setter method</a> with
-            two different types:
+            two different parameter types:
           <ul>
             <li><p>The type of the OSGi service that is required</p> <pre
                 class="prettyprint lang-java">
@@ -1451,7 +1452,7 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
               multiple
             </li>
           </ul>
-          <h4 id="requirement-bundle-capability">Bundle-Capability reference</h4>
+          <h4 id="reference-bundle-capability">Bundle-Capability reference</h4>
           <p>
             <i>ECM components</i> can not only wire to OSGi services but also to <a
               href="http://wiki.osgi.org/wiki/Provide-Capability">Bundle capabilities</a>. A Bundle
@@ -1504,7 +1505,7 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           </div>
           <p>A Bundle-Capability reference requirement becomes satisfied if there is a Bundle
             with a capability in the OSGi container that is in the necessary state, the attributes
-            of the capability match the the filter of the requirement and the namespace of the
+            of the capability match the filter of the requirement and the namespace of the
             capability matches the namespace of the reference.</p>
           <p>The setter of a Bundle-Capability reference can accept one of the following types
             as a parameter:</p>
@@ -1519,17 +1520,17 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
             <li><i>BundleCapabilityHolder</i> array if the cardinality of the reference is
               multiple</li>
           </ul>
-          <h3>Component capabilities</h3>
-          <h4>Service capability</h4>
+          <h3 id="component-capabilities">Component capabilities</h3>
+          <h4 id="service-capability">Service capability</h4>
           <p>
             An ECM component can have zero or more capabilities. At the moment, only one type of
             Capability is supported: <i>OSGi service</i>.
           </p>
           <p>
-            <i>Component instance</i> can be registered as an OSGi service automatically. <i>ComponentMetadata</i>
+            A <i>Component instance</i> can be registered as an OSGi service automatically. <i>ComponentMetadata</i>
             has a property called <i>service</i>. When this property is defined, the <a
               href="#component-context">component context</a> will register the <i>component
-              instance</i> as an OSGi service in the end of the <a href="#state-starting">starting
+              instance</i> as an OSGi service at the end of the <a href="#state-starting">starting
               process</a>. Depending on the configuration of the service property, the OSGi service will
             be registered with the following interfaces:
           </p>
@@ -1552,7 +1553,7 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
             has.
           </p>
           <p>
-            When a service is registered via the <a href="#component-context">component context</a>
+            When a service is registered via the <a href="#component-context">component context</a>,
             it will appear as the capability of the component. Programmers can query this
             information programmatically, or see it on the <a href="#webconsole-plugin">ECM
               Webconsole Plugin</a> that helps them understanding the architecture of the software.
@@ -1572,10 +1573,9 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
             has <i>multiple</i> cardinality, the setter parameter must be an array.
           <h4 id="activate-method">Activate method</h4>
           <p>
-            The activate method of the component instance is called by the <a
-              href="#component-context">component context</a> during the <a href="#state-starting">starting
-              process</a> of the component. The activate method can have the following type of
-            arguments:
+            The <a href="#component-context">component context</a> calls the activate method of the
+            component instance during the <a href="#state-starting">starting process</a> of the
+            component. The activate method can have the following type of arguments:
           </p>
           <ul>
             <li><a href="#">ComponentContext</a> that can be used to retrieve all information
@@ -1599,21 +1599,21 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           <h4 id="update-method">Update method</h4>
           <p>
             The <a href="#component-context">component context</a> calls the <i>update method</i> of
-            the component instance in the end of the <a href="#state-dynamic-update">dynamic
+            the component instance at the end of the <a href="#state-dynamic-update">dynamic
               update</a> process. The method does not take any parameters.
           </p>
           <h4 id="deactivate-method">Deactivate method</h4>
           <p>
             The <a href="#component-context">component context</a> calls the <i>deactivate
-              method</i> during <a href="#state-stopping">stopping</a> the component. The method takes
-            no parameters.
+              method</i> while <a href="#state-stopping">stopping</a> the component. The method takes no
+            parameters.
           </p>
-          <h3>Metatype support</h3>
+          <h3 id="metatype-support">Metatype support</h3>
           <p>
             Every <a href="#component-container">component container</a> registers itself as an OSGi
             service with the <a
               href="https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/metatype/MetaTypeProvider.html">MetatypeProvider</a>
-            interface if the <i>metatype</i> property of the <a href="#component-metadata">compoenent
+            interface if the <i>metatype</i> property of the <a href="#component-metadata">component
               metadata</a> is set to <i>true</i>. For more information, please see the definition of <a
               href="#component-label">label</a> and <a href="#component-description">description</a>
             component settings!
@@ -1626,8 +1626,8 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           </p>
         </div>
       </div>
-      <div class="bs-docs-featurette ecm-chapter" id="modules">
-        <h2 class="bs-docs-featurette-title ">OSGi Bundles</h2>
+      <div class="bs-docs-featurette ecm-chapter">
+        <h2 id="modules" class="bs-docs-featurette-title ">OSGi Bundles</h2>
         <p>
           ECM is built up from several bundles. Each bundle has its purpose. The separation is
           necessary to keep the technology stable and to be able to fix bugs in short development
@@ -1640,10 +1640,10 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
         <h3 id="ecm-util-method">ECM Util Method</h3>
         <p>
           Helper methods to generate and parse method signatures and to locate methods based on the
-          112.9.4 Locating Component Methods chapter of OSGi Compendium specification. ECM uses the
+          112.9.4 Locating Component Methods chapter of OSGi Compendium Specification. ECM uses the
           same algorithm to resolve <a href="#setter-method">setters</a>, <a href="activate-method">activate</a>,
           <a href="update-method">update</a> and <a href="deactivate-method">deactivate method</a>
-          except that ECM only looks for methods with pulblic modifier.
+          except that ECM only looks for methods with a pulblic modifier.
         </p>
         <h3 id="ecm-metadata">ECM Metadata</h3>
         <p>
@@ -1661,8 +1661,6 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
         </ul>
         <p>ECM implements Linkage API by default. If other technologies implemented it, a
           snapshot could be created about the whole architecture of a running system.</p>
-        <h3 id="ecm-component-api">ECM Component API</h3>
-        <p>Programmers should add ECM Component API to implement ECM components.</p>
         <h3 id="capability-collector">Capability Collector</h3>
         <p>
           Capability collector is responsible for handling the lifecycle or <a
@@ -1670,10 +1668,14 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           use this library separately to add similar functionality to existing component models like
           ECM has: Handling events when a set of requirements are satisfied.
         </p>
+        <h3 id="ecm-component-api">ECM Component API</h3>
+        <p>Programmers should add ECM Component API to implement ECM components.</p>
+
         <h3 id="ecm-component-ri">ECM Component RI</h3>
         <p>The Reference implementation of Everit Component Model specification.</p>
         <h3 id="ecm-annotation">ECM Annotation</h3>
-        <p>An annotation set that can be set instead of programmatically creating components.</p>
+        <p>An annotation set that can be used instead of the programmatic creation of the
+          components.</p>
         <h3 id="ecm-annotation-metadatabuilder">ECM Annotation MetadataBuilder</h3>
         <p>
           Util classes to create <a href="component-metadata">metadata objects</a> from a class that
@@ -1682,36 +1684,97 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
         <h3 id="ecm-extender-api">ECM Extender API</h3>
         <p>Constants of ECM Extender. The programmer can use the constants to tell the ECM
           Extender that the annotated class should be picked up.</p>
-        <h3 id="ecm-component-api">ECM Extender RI</h3>
+        <h3 id="ecm-extender-ri">ECM Extender RI</h3>
         <p>
           Reference implementation of the ECM Extender API. For more information, please see the <a
             href="usage-extender">Using the extender</a> chapter.
         </p>
       </div>
-      <div class="bs-docs-featurette ecm-chapter" id="webconsole-plugin">
-        <h2 class="bs-docs-featurette-title ">Webconsole plugin</h2>
-
+      <div class="bs-docs-featurette ecm-chapter">
+        <h2 id="webconsole-plugin" class="bs-docs-featurette-title ">Webconsole plugin</h2>
+        <div class="text-center" style="padding-bottom: 1em;">
+          <img src="ecm-webconsole.png" style="max-width: 100%;" />
+        </div>
+        <p>ECM has a webconsole plugin that</p>
+        <ul>
+          <li>shows each <a href="#component-container">component containers</a> with grey
+            background.
+          </li>
+          <li>shows the state of all of the <a href="#component-context">component contexts</a>.
+          </li>
+          <li>shows the <a href="#component-requirement">requirements</a> and <a
+            href="#component-capability">capabilities</a> of every component.
+          </li>
+          <li>provides links to create, modify or delete the configuration of components.</li>
+          <li>provides links within the description of <a href="#component-requirement">requirements</a>
+            and <a href="#component-capability">capabilities</a> to let the programmer walking
+            through the component wiring graphs.
+          </li>
+          <li><i>Coming soon:</i> provides tips for <a href="#state-unsatisfied">unsatisfied</a>
+            requirements to be able to find the missing capability easily.</li>
+        </ul>
       </div>
     </div>
     <div class="col-md-2">
       <nav id="affix-nav">
         <ul class="nav nav-pills nav-stacked everit-affix affix-top" data-spy="affix"
           data-offset-top="350" data-offset-bottom="140">
-          <li class=""><a href="#introduction">Introduction</a></li>
-          <li class=""><a href="#quickstart">Quick start</a>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#quickstart">Quick start</a>
             <ul class="nav nav-pills nav-stacked">
-              <li class=""><a href="#usage-extender">Using the extender</a></li>
-              <li class=""><a href="#usage-programmatic">Programmatic way</a></li>
+              <li><a href="#usage-extender">Using the extender</a></li>
+              <li><a href="#usage-programmatic">Programmatic way</a></li>
             </ul></li>
           <li class=""><a href="#specification">Specification</a>
             <ul class="nav nav-pills nav-stacked">
-              <li class=""><a href="#component-metadata">Component metadata</a></li>
-              <li class=""><a href="#component-container">Component container</a></li>
-              <li class=""><a href="#component-context">Component context</a></li>
-              <li class=""><a href="#component-lifecycle">Component lifecycle</a></li>
+              <li><a href="#component-metadata">Component metadata</a></li>
+              <li><a href="#component-container">Component container</a></li>
+              <li><a href="#component-context">Component context</a></li>
+              <li><a href="#component-lifecycle">Lifecycle</a>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="#component-states">States</a></li>
+                  <li><a href="#state-transitions">Transitions</a></li>
+                </ul></li>
+              <li><a href="#component-attributes">Attributes</a>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="#attribute-types">Attribute types</a></li>
+                  <li><a href="#attribute-metadata">Metadata</a></li>
+                </ul></li>
+              <li><a href="#component-reference">References</a>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="#reference-metadata">Metadata</a></li>
+                  <li><a href="#reference-config-type">Configuration types</a></li>
+                  <li><a href="#reference-cardinality">Cardinality</a></li>
+                  <li><a href="#requirement-service-reference">Service ref.</a></li>
+                  <li><a href="#reference-bundle-capability">Bundle-Capability ref.</a></li>
+                </ul></li>
+              <li><a href="#component-capabilities">Capabilities</a>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="#service-capability">Service cap.</a></li>
+                </ul></li>
+              <li><a href="#component-methods">Methods</a>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="#setter-method">Setter</a></li>
+                  <li><a href="#activate-method">Activate</a></li>
+                  <li><a href="#update-method">Update</a></li>
+                  <li><a href="#deactivate-method">Deactivate</a></li>
+                </ul></li>
+              <li><a href="#metatype-support">Metatype support</a></li>
             </ul></li>
-          <li class=""><a href="#reference-handling">Reference handling</a></li>
-          <li class=""><a href="#osgi-bundles">OSGi Bundles</a></li>
+          <li><a href="#modules">OSGi Bundles</a>
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="#ecm-util-method">ECM Util Method</a></li>
+              <li><a href="#ecm-metadata">ECM Metadata</a></li>
+              <li><a href="#linkage-api">Linkage API</a></li>
+              <li><a href="#capability-collector">Capability collector</a></li>
+              <li><a href="#ecm-component-api">ECM Component API</a></li>
+              <li><a href="#ecm-component-ri">ECM Component RI</a></li>
+              <li><a href="#ecm-annotation">ECM Annotation</a></li>
+              <li><a href="#ecm-annotation-metadatabuilder">ECM Metadata Builder</a></li>
+              <li><a href="#ecm-extender-api">ECM Extender API</a></li>
+              <li><a href="#ecm-extender-ri">ECM Extender RI</a></li>
+            </ul></li>
+          <li><a href="#webconsole-plugin">Webconsole plugin</a></li>
         </ul>
       </nav>
     </div>
