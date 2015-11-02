@@ -49,9 +49,9 @@
       </div>
       <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
         <ul class="nav navbar-nav ">
-          <li><a href="components.html ">Components</a></li>
-          <li><a href="documentation.html">Documentation</a></li>
-          <li><a href="oldsite.html ">Old site</a></li>
+          <li><a href="../components.html ">Components</a></li>
+          <li><a href="../documentation.html">Documentation</a></li>
+          <li><a href="../oldsite.html ">Old site</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">
           <li><a href="http://www.everit.biz " target="_blank">Enterprise</a></li>
@@ -159,7 +159,7 @@ public class MyComponent {
             </p></li>
         </ul>
         <p>
-          In the following example, a very simple <a href="ecm-component-container">ECM
+          In the following example, a very simple <a href="#component-container">ECM
             Component Container</a> is created and started within a Bundle-Activator:
         </p>
         <pre class="prettyprint lang-java">
@@ -284,7 +284,7 @@ public class MyActivator {
                 can be attached to the component.
               </p>
               <p>
-                By default, this setting has the same value as the <a href="component-id">component
+                By default, this setting has the same value as the <a href="#component-id">component
                   id</a>.
               </p>
             </div>
@@ -448,7 +448,7 @@ public class MyActivator {
         <h3 id="component-container">Component container</h3>
         <p>
           A <i>Component Container</i> is responsible for the instantiation and lifecycle of <a
-            href="component-context">Component Contexts</a>. When the <i>Component Container</i> is
+            href="#component-context">Component Contexts</a>. When the <i>Component Container</i> is
           opened, an OSGi service is registered with the following interfaces:
         </p>
         <div class="responsive-table">
@@ -482,7 +482,7 @@ public class MyActivator {
                 class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedService</a>
             </div>
             <div class="col-sm-9 col-lg-6">
-              Only if the <a href="#TBD">configuration policy</a> of the container is either <a
+              Only if the <a href="#configuration-policy">configuration policy</a> of the container is either <a
                 href="#policy-optional">OPTIONAL</a> or <a href="#policy-required">REQUIRED</a>
             </div>
           </div>
@@ -494,7 +494,7 @@ public class MyActivator {
                 class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedServiceFactory</a>
             </div>
             <div class="col-sm-9 col-lg-6">
-              Only if the <a href="#TBD">configuration policy</a> of the container is <a
+              Only if the <a href="#configuration-policy">configuration policy</a> of the container is <a
                 href="#policy-factory">FACTORY</a>.
             </div>
           </div>
@@ -517,7 +517,7 @@ public class MyActivator {
             Admin</i> notifies the <i>Component Container</i> by calling the OSGi service if a new
           configuration is available; a configuration was modified, or a configuration was deleted.
           The behavior of the Component Container depends on the <a
-            href="#component-configuration-policy">configuration policy</a>.
+            href="#configuration-policy">configuration policy</a>.
         </p>
         <div class="clearfix">
           <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-0 text-center"
@@ -540,7 +540,7 @@ public class MyActivator {
           handles the lifecycle of exactly one <i>Component</i>.
         </p>
         <p>
-          The <a href="#">ComponentContext</a> instance can be used within a component to
+          The <a href="#component-context">ComponentContext</a> instance can be used within a component to
         </p>
         <ul>
           <li>get the current configuration of the component</li>
@@ -553,12 +553,12 @@ public class MyActivator {
         <p>
           <strong class="text-danger">Component developers should always register OSGi
             services via <i>ComponentContext</i> and not via <i>BundleContext</i>!
-          </strong> ECM can provide complete <a href="#">Component wiring</a> information only if OSGi
+          </strong> ECM can provide complete <a href="#component-reference">Component wiring</a> information only if OSGi
           services are registered via <i>ComponentContext</i>.
         </p>
         <p>
           Component developers can receive the <i>component context</i> by specifying it as a
-          parameter of the <a href="">activate</a> method of the component.
+          parameter of the <a href="#activate-method">activate</a> method of the component.
         </p>
 
 
@@ -590,7 +590,7 @@ public class MyActivator {
           <div id="state-unsatisfied" class="row">
             <div class="col-sm-5 col-md-4 col-lg-3">UNSATISFIED</div>
             <div class="col-sm-7 col-md-8 col-lg-9">
-              The component has one or more unsatisfied <a href="requirements">requirements</a>.
+              The component has one or more unsatisfied <a href="#component-reference">requirements</a>.
             </div>
           </div>
           <hr />
@@ -786,7 +786,7 @@ public class MyActivator {
                 <li>any of the specified <a href="#setter-method">setter methods</a> of the
                   component instance throws an exception.
                 </li>
-                <li>the <a href="activate-method">activate method</a> throws an exception
+                <li>the <a href="#activate-method">activate method</a> throws an exception
                 </li>
               </ul>
             </div>
@@ -802,7 +802,7 @@ public class MyActivator {
             <div class="col-sm-7 col-lg-8">
               <p>
                 The <a href="#component-context">component context</a> tries to start a <a
-                  href="state-failed">FAILED</a> component if
+                  href="#state-failed">FAILED</a> component if
               </p>
               <ul>
                 <li>the configuration is changed</li>
@@ -1157,7 +1157,7 @@ public class MyActivator {
                   <li>if the attribute is <i>non-dynamic</i>, the component will be restarted.
                   </li>
                   <li>if the attribute is <i>dynamic</i>, the <i>setter</i> method of the
-                    component (if there is any) will be called before <a href="update-method">update
+                    component (if there is any) will be called before <a href="#update-method">update
                       method</a>.
                 </ul>
               </div>
@@ -1641,8 +1641,8 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
         <p>
           Helper methods to generate and parse method signatures and to locate methods based on the
           112.9.4 Locating Component Methods chapter of OSGi Compendium Specification. ECM uses the
-          same algorithm to resolve <a href="#setter-method">setters</a>, <a href="activate-method">activate</a>,
-          <a href="update-method">update</a> and <a href="deactivate-method">deactivate method</a>
+          same algorithm to resolve <a href="#setter-method">setters</a>, <a href="#activate-method">activate</a>,
+          <a href="#update-method">update</a> and <a href="#deactivate-method">deactivate method</a>
           except that ECM only looks for methods with a pulblic modifier.
         </p>
         <h3 id="ecm-metadata">ECM Metadata</h3>
@@ -1664,7 +1664,7 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
         <h3 id="capability-collector">Capability Collector</h3>
         <p>
           Capability collector is responsible for handling the lifecycle or <a
-            href="component-reference">component references</a> on the low level. Programmers can
+            href="#component-reference">component references</a> on the low level. Programmers can
           use this library separately to add similar functionality to existing component models like
           ECM has: Handling events when a set of requirements are satisfied.
         </p>
@@ -1678,8 +1678,8 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           components.</p>
         <h3 id="ecm-annotation-metadatabuilder">ECM Annotation MetadataBuilder</h3>
         <p>
-          Util classes to create <a href="component-metadata">metadata objects</a> from a class that
-          is annotated <a href="ecm-annotation">ECM Annotaitons</a>.
+          Util classes to create <a href="#component-metadata">metadata objects</a> from a class that
+          is annotated <a href="#ecm-annotation">ECM Annotaitons</a>.
         </p>
         <h3 id="ecm-extender-api">ECM Extender API</h3>
         <p>Constants of ECM Extender. The programmer can use the constants to tell the ECM
@@ -1687,7 +1687,7 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
         <h3 id="ecm-extender-ri">ECM Extender RI</h3>
         <p>
           Reference implementation of the ECM Extender API. For more information, please see the <a
-            href="usage-extender">Using the extender</a> chapter.
+            href="#usage-extender">Using the extender</a> chapter.
         </p>
       </div>
       <div class="bs-docs-featurette ecm-chapter">
