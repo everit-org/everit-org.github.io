@@ -114,19 +114,18 @@
               <a href="#ecm-extender-api">ecm-extender-api</a>
             </p></li>
           <li><p>
-              <a href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22biz.aQute.bndlib%22">bndlib</a>
-              with <i>provided</i> scope as it is only necessary for annotation processing
+              <a href="#ecm-component-api">ecm-component-api</a>
+              if any of the classes from the API is used within the component (E.g.: ComponentContext).
             </p></li>
         </ul>
 
         <p>To be picked up by the extender, the component class must be annotated in the
           following way:</p>
         <pre class="prettyprint lang-java">import org.everit.osgi.ecm.annotation.Component;
-import aQute.bnd.annotation.headers.ProvideCapability;
+import org.everit.osgi.ecm.extender.ExtendComponent;
 
 @Component
-@ProvideCapability(ns = ECMExtenderConstants.CAPABILITY_NS_COMPONENT,
-    value = ECMExtenderConstants.CAPABILITY_ATTR_CLASS + "" + "=${@class}")
+@ExtendComponent
 public class MyComponent {
 }</pre>
         <p>
@@ -136,10 +135,10 @@ public class MyComponent {
         <p>
           With a build tool that uses <i>bndlib</i> inside, the necessary MANIFEST header will be
           automatically generated. Such tools are bndtools and maven-bundle-plugin. If this
-          automation is not available, the <i>Provide-Capability</i> header must be manually
+          automation is not available, the <i>Require-Capability</i> header must be manually
           defined:
         </p>
-        <pre class="prettyprint">Provide-Capability: org.everit.osgi.ecm.component;class="mypackage.MyComponent"</pre>
+        <pre class="prettyprint">Require-Capability: osgi.extender;osgi.extender=org.everit.osgi.ecm.component;class="mypackage.MyComponent"</pre>
         <p>By having the necessary MANIFEST header, the ECM Extender will automatically pick up
           the specified class and look for annotations.</p>
         <p>In the runtime environment, the following OSGi bundle should be installed with its
@@ -177,7 +176,7 @@ public class MyActivator {
   @Override
   public void start(final BundleContext context) {
     ComponentMetadataBuilder builder = new ComponentMetadataBuilder();
-    ComponentMetadata metadata = builder.withType(MyComponent.class).build();
+    ComponentMetadata metadata = builder.withType(MyComponent.class.getName()).build();
 
     ComponentContainerFactory factory = new ComponentContainerFactory(context);
 
