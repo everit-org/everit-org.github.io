@@ -114,19 +114,60 @@
               <a href="#ecm-extender-api">ecm-extender-api</a>
             </p></li>
           <li><p>
-              <a href="#ecm-component-api">ecm-component-api</a>
-              if any of the classes from the API is used within the component (E.g.: ComponentContext).
+              <a href="#ecm-component-api">ecm-component-api</a> if any of the classes from the API
+              is used within the component (E.g.: <a
+                href="http://www.everit.org/ecm-component-api/apidocs/org/everit/osgi/ecm/component/ComponentContext.html">ComponentContext</a>).
             </p></li>
         </ul>
 
         <p>To be picked up by the extender, the component class must be annotated in the
           following way:</p>
         <pre class="prettyprint lang-java">import org.everit.osgi.ecm.annotation.Component;
+import org.everit.ecm.annotation.Service;
+import org.everit.ecm.annotation.ServiceRef;
+import org.everit.osgi.ecm.component.ServiceHolder;
 import org.everit.osgi.ecm.extender.ExtendComponent;
 
 @Component
+@Service
 @ExtendComponent
+@StringAttributes(@StringAttribute(attributeId = "service.description", value = "My Component"))
 public class MyComponent {
+
+  private MyService myService;
+
+  /**
+   * Example of specifying a service reference on a setter. The programmer can use the annotation
+   * on the member variable and in front of the class in @ServiceRefs annotation, too.
+   */
+  @ServiceRef
+  public void setMyService(MyType myService) {
+    this.myService = myService;
+  }
+  
+  @ServiceRef
+  public void setMyServiceWithInfo(ServiceHolder&lt;MyType&gt; myServiceHolder) {
+    // The programmer can get additional information if ServiceHolder is used instead of the type
+    // of the service itself. E.g.: The service properties, attributes and directives of the
+    // configuration of the reference.
+  }
+
+  @ServiceRef
+  public void setMyMultiService(MyType[] myServices) {
+    // If the parameter type is an array, the cardinality of the reference will be multiple. Usage
+    // of ServiceHolder array is also possible as parameter type.
+  }
+
+  @Activate
+  public void activate() {
+    // This is a sample activate method. Possible parameters: Componentcontext, BundleContext and
+    // Map. The programmer can also define update and deactivate methods.
+    
+    // The programmer can register additional OSGi service programmatically via ComponentContext.
+    // In case a service is programmatically registered, it should be shown in front of the class
+    // in the @ManualServices annotation.
+  }
+
 }</pre>
         <p>
           The documentation of all annotations is available in <a
@@ -148,20 +189,52 @@ public class MyComponent {
               <a href="#ecm-extender-ri">extender-ri</a>
             </p></li>
         </ul>
-        <h3 id="usage-programmatic">Programmatic way</h3>
-        <p>Everit Component Model is designed in the way that Components can be created
-          programmatically, too. During the development and also on the running OSGi container, the
-          following OSGi bundle with its dependencies should be used:</p>
-        <ul>
-          <li><p>
-              <a href="#ecm-component-ri">ecm-component-ri</a>
-            </p></li>
-        </ul>
-        <p>
-          In the following example, a very simple <a href="#component-container">ECM
-            Component Container</a> is created and started within a Bundle-Activator:
-        </p>
-        <pre class="prettyprint lang-java">
+        <h3 id="usage-bnd">
+          Adding the Bnd plugin
+          </h4>
+          <p>
+            The <a href="ecm-bnd-plugin">Bnd plugin</a> can generate additional <i>Provide-Capability</i>
+            MANIFEST header entries based on ECM annotations. Some repositories index the <i>Provide-Capability</i>
+            header and makes it possible to users searching based on the information in them.
+          </p>
+          <p>
+            In case of <i>maven-bundle-plugin</i> the <a href="ecm-bnd-plugin">Bnd plugin</a> should
+            be configured in the following way:
+          </p>
+          <pre class="prettyprint lang-xml">
+&lt;plugin&gt;
+  &lt;groupId&gt;org.apache.felix&lt;/groupId&gt;
+  &lt;artifactId&gt;maven-bundle-plugin&lt;/artifactId&gt;
+  &lt;configuration&gt;
+    &lt;instructions&gt;
+      <strong>&lt;_plugin&gt;org.everit.osgi.ecm.bnd.ECMBndAnalyzerPlugin&lt;/_plugin&gt;</strong>
+    &lt;/instructions&gt;
+  &lt;/configuration&gt;
+  &lt;dependencies&gt;
+    <strong>&lt;dependency&gt;
+      &lt;groupId&gt;org.everit.osgi&lt;/groupId&gt;
+      &lt;artifactId&gt;org.everit.osgi.ecm.annotation.bnd&lt;/artifactId&gt;
+      &lt;version&gt;3.0.0&lt;/version&gt;
+    &lt;/dependency&gt;</strong>
+  &lt;/dependencies&gt;
+&lt;/plugin&gt;</pre>
+          <p class="bg-danger">If you use other Bnd based build tools (e.g.: the gradle plugin) and you figured out how to
+            configure the Bnd plugin, do not hesitate to send a Pull Request to this documentation
+            on Github!</p>
+          <h3 id="usage-programmatic">Programmatic way</h3>
+          <p>Everit Component Model is designed in the way that Components can be created
+            programmatically, too. During the development and also on the running OSGi container,
+            the following OSGi bundle with its dependencies should be used:</p>
+          <ul>
+            <li><p>
+                <a href="#ecm-component-ri">ecm-component-ri</a>
+              </p></li>
+          </ul>
+          <p>
+            In the following example, a very simple <a href="#component-container">ECM Component
+              Container</a> is created and started within a Bundle-Activator:
+          </p>
+          <pre class="prettyprint lang-java">
 import org.everit.osgi.ecm.component.ri.ComponentContainerFactory;
 import org.everit.osgi.ecm.component.ri.ComponentContainerInstance;
 import org.everit.osgi.ecm.metadata.ComponentMetadata;
@@ -189,10 +262,12 @@ public class MyActivator {
     this.myComponentContainer.close();
   }
 }</pre>
-        <p>
-          For more information, how to build <i>ComponentMetadata</i> programmatically, see the
-          documentation of <a href="#ecm-metadata">ecm-metadata</a> OSGi bundle!
-        </p>
+          <p>
+            For more information, how to build <a
+              href="http://www.everit.org/ecm-metadata/apidocs/org/everit/osgi/ecm/metadata/ComponentMetadata.html">ComponentMetadata</a>
+            programmatically, see the documentation of <a href="#ecm-metadata">ecm-metadata</a> OSGi
+            bundle!
+          </p>
       </div>
       <div class="bs-docs-featurette ecm-chapter">
         <h2 id="specification" class="bs-docs-featurette-title ">Specification</h2>
@@ -481,8 +556,8 @@ public class MyActivator {
                 class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedService</a>
             </div>
             <div class="col-sm-9 col-lg-6">
-              Only if the <a href="#configuration-policy">configuration policy</a> of the container is either <a
-                href="#policy-optional">OPTIONAL</a> or <a href="#policy-required">REQUIRED</a>
+              Only if the <a href="#configuration-policy">configuration policy</a> of the container
+              is either <a href="#policy-optional">OPTIONAL</a> or <a href="#policy-required">REQUIRED</a>
             </div>
           </div>
           <hr />
@@ -493,8 +568,8 @@ public class MyActivator {
                 class="hidden-xs hidden-sm hidden-md">org.osgi.service.cm.</span>ManagedServiceFactory</a>
             </div>
             <div class="col-sm-9 col-lg-6">
-              Only if the <a href="#configuration-policy">configuration policy</a> of the container is <a
-                href="#policy-factory">FACTORY</a>.
+              Only if the <a href="#configuration-policy">configuration policy</a> of the container
+              is <a href="#policy-factory">FACTORY</a>.
             </div>
           </div>
           <hr />
@@ -515,8 +590,8 @@ public class MyActivator {
           is registered with <i>ManagedService</i> or <i>ManagedServiceFactory</i> interface. <i>Configuration
             Admin</i> notifies the <i>Component Container</i> by calling the OSGi service if a new
           configuration is available; a configuration was modified, or a configuration was deleted.
-          The behavior of the Component Container depends on the <a
-            href="#configuration-policy">configuration policy</a>.
+          The behavior of the Component Container depends on the <a href="#configuration-policy">configuration
+            policy</a>.
         </p>
         <div class="clearfix">
           <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-0 text-center"
@@ -539,7 +614,8 @@ public class MyActivator {
           handles the lifecycle of exactly one <i>Component</i>.
         </p>
         <p>
-          The <a href="#component-context">ComponentContext</a> instance can be used within a component to
+          The <a href="#component-context">ComponentContext</a> instance can be used within a
+          component to
         </p>
         <ul>
           <li>get the current configuration of the component</li>
@@ -552,8 +628,8 @@ public class MyActivator {
         <p>
           <strong class="text-danger">Component developers should always register OSGi
             services via <i>ComponentContext</i> and not via <i>BundleContext</i>!
-          </strong> ECM can provide complete <a href="#component-reference">Component wiring</a> information only if OSGi
-          services are registered via <i>ComponentContext</i>.
+          </strong> ECM can provide complete <a href="#component-reference">Component wiring</a> information
+          only if OSGi services are registered via <i>ComponentContext</i>.
         </p>
         <p>
           Component developers can receive the <i>component context</i> by specifying it as a
@@ -1677,8 +1753,8 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           components.</p>
         <h3 id="ecm-annotation-metadatabuilder">ECM Annotation MetadataBuilder</h3>
         <p>
-          Util classes to create <a href="#component-metadata">metadata objects</a> from a class that
-          is annotated <a href="#ecm-annotation">ECM Annotaitons</a>.
+          Util classes to create <a href="#component-metadata">metadata objects</a> from a class
+          that is annotated <a href="#ecm-annotation">ECM Annotaitons</a>.
         </p>
         <h3 id="ecm-extender-api">ECM Extender API</h3>
         <p>Constants of ECM Extender. The programmer can use the constants to tell the ECM
@@ -1688,6 +1764,63 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           Reference implementation of the ECM Extender API. For more information, please see the <a
             href="#usage-extender">Using the extender</a> chapter.
         </p>
+        <h3 id="ecm-bnd-plugin">ECM Bnd Plugin</h3>
+        <p>
+          The Bnd plugin processes the annotations of every component in the project and generates
+          additional entries to the <i>Provide-Capability</i> MANIFEST header. The Bnd plugin
+          processes the following annotations:
+        </p>
+        <ul>
+          <li><p>
+              <strong>@Component:</strong> A new Capability is created with <i>org.everit.osgi.ecm.component</i>
+              namespace. The following attributes are specified within this capability:
+            </p>
+            <ul>
+              <li><p>
+                  <strong>componentId:</strong> The id of the component
+                </p></li>
+              <li><p>
+                  <strong>class:</strong> The type of the component
+                </p></li>
+              <li><p>
+                  <strong>label:</strong> The label of the component. If the label is localized, the
+                  value is replaced with the locale of the default language.
+                </p></li>
+              <li><p>
+                  <strong>description:</strong> The description of the component. If the description
+                  is localized, the value is replaced with the locale of the default language.
+                </p></li>
+            </ul></li>
+          <li><p>
+              <strong>@Service:</strong> The plugin generates a capability with the <i>osgi.service</i>
+              namespace. The following attributes are specified for the capability:
+            </p>
+            <ul>
+              <li><p>
+                  <strong>objectClass:</strong> List of the name of the types that the service is
+                  registered with.
+                </p></li>
+              <li><p>
+                  <strong>org.everit.osgi.ecm.component.id:</strong> The id of the component that
+                  registers this service.
+                </p></li>
+            </ul></li>
+          <li><p>
+              <strong>@ManualService:</strong> The plugin generates a capability with the <i>osgi.service</i>
+              namespace for each <i>@ManualService</i> annotations. The following attributes are
+              specified for the capability:
+            </p>
+            <ul>
+              <li><p>
+                  <strong>objectClass:</strong> List of the name of the types that the service is
+                  registered with.
+                </p></li>
+              <li><p>
+                  <strong>org.everit.osgi.ecm.component.id:</strong> The id of the component that
+                  registers this service.
+                </p></li>
+            </ul></li>
+        </ul>
       </div>
       <div class="bs-docs-featurette ecm-chapter">
         <h2 id="webconsole-plugin" class="bs-docs-featurette-title ">Webconsole plugin</h2>
@@ -1722,6 +1855,7 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
           <li><a href="#quickstart">Quick start</a>
             <ul class="nav nav-pills nav-stacked">
               <li><a href="#usage-extender">Using the extender</a></li>
+              <li><a href="#usage-bnd">Adding the Bnd plugin</a></li>
               <li><a href="#usage-programmatic">Programmatic way</a></li>
             </ul></li>
           <li class=""><a href="#specification">Specification</a>
@@ -1772,6 +1906,7 @@ public void setOtherService(ServiceHolder&lt;OtherService&gt; holder) {
               <li><a href="#ecm-annotation-metadatabuilder">ECM Metadata Builder</a></li>
               <li><a href="#ecm-extender-api">ECM Extender API</a></li>
               <li><a href="#ecm-extender-ri">ECM Extender RI</a></li>
+              <li><a href="#ecm-bnd-plugin">ECM Bnd Plugin</a></li>
             </ul></li>
           <li><a href="#webconsole-plugin">Webconsole plugin</a></li>
         </ul>
